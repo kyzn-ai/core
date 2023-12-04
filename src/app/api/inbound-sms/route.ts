@@ -1,18 +1,25 @@
+/**
+ * @file The endpoint that recieves inbound SMS message requests from Twilio.
+ * @author Riley Barabash <riley@rileybarabash.com>
+ *
+ * @todo DEPRIORITIZED: Add a security check to only allow requests from Twilio.
+ */
+
+import receiveAndReply from "~/app/api/inbound-sms/receive-and-reply"
 import { type NextRequest } from "next/server"
-import recieveAndReply from "./recieve-and-reply"
 
 //  Handle incoming Twilio requests
 
 export async function POST(req: NextRequest) {
-
     //  Reply to the sender
 
-    return await recieveAndReply(req, ({ Body: content, From: sender }) => {
+    return await receiveAndReply({
+        request: req,
+        createMessage: ({ Body: content, From: sender }) => {
+            //  Template response
 
-        //  Template response
-
-        return `Message received: "${content}" from ${sender}`
-
-    }, true)
-
+            return `Message received: "${content}" from ${sender}`
+        },
+        debug: true
+    })
 }

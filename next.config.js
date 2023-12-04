@@ -1,10 +1,15 @@
 /**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
+ * @file Configuration for Next.js.
+ * @author Riley Barabash <riley@rileybarabash.com>
  */
-await import("./src/env.js");
 
-/** @type {import("next").NextConfig} */
-const config = {};
+await import("./src/env.js")
 
-export default config;
+/**
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful for Docker builds.
+ *
+ * @type { import ( "next" ) .NextConfig }
+ */
+const config = {}
+
+export default config

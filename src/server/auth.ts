@@ -1,72 +1,77 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+/**
+ * @file Creates an authentication configuration for Auth.js.
+ * @author Riley Barabash <riley@rileybarabash.com>
+ */
 
-import { env } from "~/env";
-import { db } from "~/server/db";
-import { mysqlTable } from "~/server/db/schema";
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
+import { preferences } from "~/preferences"
+import { db } from "~/server/db"
+import { mysqlTable } from "~/utils"
+import { createSenderIdentity, sendVerificationRequest } from "~/utils"
+import { type DefaultSession, getServerSession, type NextAuthOptions } from "next-auth"
 
 /**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
+ * Adds types to `next-auth` via module augmentation.
+ *
+ * Allows for custom properties on the `session` object.
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
-  }
+    interface Session extends DefaultSession {
+        //  Add custom session properties
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+        user: { id: string } & DefaultSession["user"]
+    }
 }
 
 /**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
+ * Configures Auth.js providers, adapters, and callbacks.
  *
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
-  },
-  adapter: DrizzleAdapter(db, mysqlTable),
-  providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
-  ],
-};
+    //  Contains a single email provider for magic links
+
+    providers: [
+        {
+            id: "email",
+            type: "email",
+            from: createSenderIdentity({
+                senderEmail: preferences.brand.emails.auth
+            }),
+            server: {},
+
+            //  Expires after 30 minutes
+
+            maxAge: 30 * 60,
+
+            name: "Email",
+            options: {},
+            sendVerificationRequest
+        }
+    ],
+
+    callbacks: {
+        //  Updates the session to include the user ID
+
+        session: ({ session, user }) => ({
+            ...session,
+            user: {
+                ...session.user,
+                id: user.id
+            }
+        })
+    },
+
+    //  Contains the core functionality needed for interfacing Auth.js with a database
+
+    adapter: DrizzleAdapter(db, mysqlTable)
+}
 
 /**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
+ * Wraps `getServerSession` so that you don't need to import `authOptions` in every file.
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = () => getServerSession(authOptions)

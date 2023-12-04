@@ -1,82 +1,115 @@
-import Link from "next/link";
+/**
+ * @file The home page for the app. This is the first thing that users will see when they navigate to our site.
+ * @author Riley Barabash <riley@rileybarabash.com>
+ */
 
-import { CreatePost } from "~/app/_components/create-post";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import { PostManager } from "~/app/_components/post-manager"
+import { preferences } from "~/preferences"
+import { getServerAuthSession } from "~/server/auth"
+import { api } from "~/trpc/server"
+import Image from "next/image"
+import Link from "next/link"
 
 export default async function Home() {
-  const hello = await api.post.hello.query({ text: "from tRPC" });
-  const session = await getServerAuthSession();
+    //  Returns the current user's session if they are logged in
 
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">
-            {hello ? hello.greeting : "Loading tRPC query..."}
-          </p>
+    const session = await getServerAuthSession()
 
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
-            <Link
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-            >
-              {session ? "Sign out" : "Sign in"}
-            </Link>
-          </div>
-        </div>
+    //  Some example tRPC queries to the experimental router
 
-        <CrudShowcase />
-      </div>
-    </main>
-  );
+    const testQuery = await api.experimental.test.query({ fromClient: "request from client" + " | " })
+    const protectedTestQuery = session?.user ? await api.experimental.protectedTest.query() : null
+
+    return (
+        <>
+            {/* Default to "flex w-full flex-col items-center justify-center" on all divs */}
+
+            <main className="flex min-h-screen w-full flex-col items-center justify-center">
+                {/* Hero section */}
+
+                <section className="flex w-full flex-col items-center justify-center gap-8 p-16">
+                    {/* Logo image */}
+
+                    <Image src={"/logo.png"} width={256} height={0} alt={`${preferences.brand.displayName} logo`} />
+
+                    {/* Divider */}
+
+                    <div className="flex h-px w-full max-w-[64px] flex-col items-center justify-center bg-[#808080] bg-opacity-25" />
+
+                    {/* Test query wrapper */}
+
+                    <div className="flex w-full flex-col items-center justify-center gap-4">
+                        {/* Public query */}
+
+                        <p className="rounded-md border border-[#808080] border-opacity-25 bg-gradient-to-tr from-black to-[#222222] px-4 py-2 font-mono">{testQuery?.fromServer ?? "Loading..."}</p>
+
+                        {/* Protected query */}
+
+                        <p className={`rounded-md border border-[#808080] border-opacity-25 bg-gradient-to-tr from-black to-[#222222] px-4 py-2 font-mono ${!!protectedTestQuery ? "text-[#0080FF]" : "text-red-500"}`}>
+                            <span className="text-[#808080]">Secret message: </span>
+                            {protectedTestQuery ?? "not authenticated"}
+                        </p>
+                    </div>
+
+                    {/* Button + auth status container */}
+
+                    <div className="flex w-full flex-col items-center justify-center gap-4">
+                        {/* Authentication status */}
+
+                        <p>{session && <span>Logged in as {session.user?.name}</span>}</p>
+
+                        {/* Sign in button */}
+
+                        <Link href={session ? "/api/auth/signout" : "/api/auth/signin"} className="rounded-md bg-gradient-to-tr from-[#DDDDDD] to-white px-8 py-2 text-black no-underline transition duration-500 ease-out-expo hover:opacity-50">
+                            {session ? "Sign out" : "Sign in"}
+                        </Link>
+                    </div>
+
+                    {/* Post creation example */}
+
+                    <PostDemo />
+                </section>
+            </main>
+        </>
+    )
 }
 
-async function CrudShowcase() {
-  const session = await getServerAuthSession();
-  if (!session?.user) return null;
+async function PostDemo() {
+    //  Get auth session, returning null if the user is not logged in
 
-  const latestPost = await api.post.getLatest.query();
+    const session = await getServerAuthSession()
+    if (!session?.user) return null
 
-  return (
-    <div className="w-full max-w-xs">
-      {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
-      ) : (
-        <p>You have no posts yet.</p>
-      )}
+    //  Get the user's latest post
 
-      <CreatePost />
-    </div>
-  );
+    const mostRecentPost = await api.posts.getMostRecent.query()
+
+    return (
+        <>
+            {/* Divider */}
+
+            <div className="flex h-px w-full max-w-[64px] flex-col items-center justify-center bg-[#808080] bg-opacity-25" />
+
+            {/* Card */}
+
+            <div className="flex w-full max-w-xs flex-col items-center justify-center gap-4 rounded-md border border-[#808080] border-opacity-25 p-4">
+                {/* User's latest post */}
+
+                <p className="w-full truncate py-2">
+                    {!!mostRecentPost ? (
+                        <>
+                            <span className="font-bold">Recently: </span>
+                            {mostRecentPost.content}
+                        </>
+                    ) : (
+                        "No posts yet."
+                    )}
+                </p>
+
+                {/* Create post form */}
+
+                <PostManager />
+            </div>
+        </>
+    )
 }

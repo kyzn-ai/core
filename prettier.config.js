@@ -1,6 +1,19 @@
-/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').options} */
-const config = {
-  plugins: ["prettier-plugin-tailwindcss"],
-};
+/**
+ * @file Configures the options for Prettier (that is, the few that exist).
+ * @author Riley Barabash <riley@rileybarabash.com>
+ *
+ * @see https://prettier.io/docs/en/options.html
+ */
 
-export default config;
+/**
+ * @type { import ( "prettier" ) .Config & import ( "prettier-plugin-tailwindcss" ) .options }
+ */
+export default {
+    quotes: "double",
+    semi: false,
+    arrowParens: "avoid",
+    trailingComma: "none",
+    tabWidth: 4,
+    printWidth: 9999,
+    plugins: ["prettier-plugin-tailwindcss"]
+}

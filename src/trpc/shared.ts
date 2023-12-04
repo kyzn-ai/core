@@ -1,30 +1,31 @@
-import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
-import superjson from "superjson";
+/**
+ * @file Provides shared utilities and types for tRPC.
+ * @author Riley Barabash <riley@rileybarabash.com>
+ */
 
-import { type AppRouter } from "~/server/api/root";
+import { env } from "~/env"
+import { type AppRouter } from "~/server/api/root"
+import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server"
+import superjson from "superjson"
 
-export const transformer = superjson;
+//  Create an alias for Superjson
 
-function getBaseUrl() {
-  if (typeof window !== "undefined") return "";
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-}
+export const transformer = superjson
 
-export function getUrl() {
-  return getBaseUrl() + "/api/trpc";
-}
+//  Generate the tRPC URL, specifying the base URL for server-side requests
+
+export const trpcEndpoint = (): string => (typeof window !== "undefined" ? "" : env.NEXT_PUBLIC_BASE_URL) + "/api/trpc"
 
 /**
- * Inference helper for inputs.
+ * @description Helper for inferring the input types of specific tRPC routes.
  *
- * @example type HelloInput = RouterInputs['example']['hello']
+ * @example type HelloInput = RouterInputs["example"]["hello"]
  */
-export type RouterInputs = inferRouterInputs<AppRouter>;
+export type RouterInputs = inferRouterInputs<AppRouter>
 
 /**
- * Inference helper for outputs.
+ * @description Helper for inferring the output types of specific tRPC routes.
  *
- * @example type HelloOutput = RouterOutputs['example']['hello']
+ * @example type HelloOutput = RouterOutputs["example"]["hello"]
  */
-export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export type RouterOutputs = inferRouterOutputs<AppRouter>
