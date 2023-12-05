@@ -3,6 +3,7 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
+import { Analytics } from "@vercel/analytics/react"
 import "~/styles/globals.css"
 import { preferences } from "~/preferences"
 import { TRPCReactProvider } from "~/trpc/react"
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {/* TRPC uses cookies to store and retrieve sessions */}
 
                 <TRPCReactProvider cookies={cookies().toString()}>{children}</TRPCReactProvider>
+                <Analytics />
             </body>
         </html>
     )
