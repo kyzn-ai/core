@@ -6,10 +6,10 @@
  */
 
 /**
- * @type { import ( "prettier" ) .Config & import ( "prettier-plugin-tailwindcss" ) .options }
+ * @type { import ( "prettier" ) .Config & import ( "prettier-plugin-tailwindcss" ) .PluginOptions }
  */
 export default {
-    quotes: "double",
+    singleQuote: false,
     semi: false,
     arrowParens: "avoid",
     trailingComma: "none",
