@@ -3,4 +3,4 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-export * from "./resend"
+export * from "~/lib/resend"

@@ -5,7 +5,7 @@
  * @todo DEPRIORITIZED: Consolidate database column name casing and conventions. Auth.js uses camelCase for its database rows while respecting the conventional snake_case formatting for OAuth-related values. The Drizzle adapter does not yet support forced casing conventions.
  */
 
-import { mysqlTable } from "~/utils"
+import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations, sql } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
 import { type AdapterAccount } from "next-auth/adapters"

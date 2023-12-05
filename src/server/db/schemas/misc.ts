@@ -5,7 +5,7 @@
  * @todo DEPRIORITIZED: Consolidate database column name casing and conventions. Start with "~/server/db/schemas/auth".
  */
 
-import { mysqlTable } from "~/utils"
+import { mysqlTable } from "~/utils/multi-project-schema"
 import { sql } from "drizzle-orm"
 import { bigint, index, timestamp, varchar } from "drizzle-orm/mysql-core"
 
