@@ -18,7 +18,7 @@ const appConfig: AppConfig = {
         description: "Communicate with an artificial personality derived from your internet presence, private thoughts, and personal preferences.",
 
         emails: {
-            auth: "auth@amnesia.onambrosia.app",
+            noReply: "no-reply@amnesia.onambrosia.app",
             support: "support@amnesia.onambrosia.app"
         },
 

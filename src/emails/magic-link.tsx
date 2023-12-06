@@ -82,7 +82,7 @@ export function MagicLink({ authLink, brandDisplayName = preferences.brand.displ
                         </Section>
 
                         <Text className="text-[14px] leading-[24px] text-black">
-                            or copy and paste this URL into your browser:{" "}
+                            Or copy and paste this URL into your browser:{" "}
                             <Link href={authLink} className="break-all text-blue-600 no-underline">
                                 {authLink}
                             </Link>

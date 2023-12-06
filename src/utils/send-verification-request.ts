@@ -15,9 +15,7 @@ export async function sendVerificationRequest({ identifier, url, expires }: Send
         //  Send the verification email
 
         const response = await resend.emails.send({
-            from: createSenderIdentity({
-                senderEmail: preferences.brand.emails.auth
-            }),
+            from: createSenderIdentity({ email: preferences.brand.emails.noReply }),
             to: [identifier],
             subject: `Sign in to ${preferences.brand.displayName}`,
             text: `Open this link to sign in to ${preferences.brand.displayName}: ${url}\n\n`,

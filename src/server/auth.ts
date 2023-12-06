@@ -38,9 +38,7 @@ export const authOptions: NextAuthOptions = {
         {
             id: "email",
             type: "email",
-            from: createSenderIdentity({
-                senderEmail: preferences.brand.emails.auth
-            }),
+            from: createSenderIdentity({ email: preferences.brand.emails.noReply }),
             server: {},
 
             //  Expires after 30 minutes

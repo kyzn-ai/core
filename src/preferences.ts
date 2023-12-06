@@ -16,7 +16,7 @@ const appConfigSchema = z.object({
         description: z.string(),
 
         emails: z.object({
-            auth: z.string().email(),
+            noReply: z.string().email(),
             support: z.string().email()
         }),
         urls: z.object({
