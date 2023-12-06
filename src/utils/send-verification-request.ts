@@ -23,7 +23,7 @@ export async function sendVerificationRequest({ identifier, url, expires }: Send
             text: `Open this link to sign in to ${preferences.brand.displayName}: ${url}\n\n`,
             react: MagicLink({
                 authLink: url,
-                logoURL: `${env.BASE_URL}/brandmark.png`,
+                logoUrl: `${env.BASE_URL}/brandmark-opaque.png`,
                 recipientEmail: identifier,
                 expires: expires
             })

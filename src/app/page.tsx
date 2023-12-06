@@ -30,7 +30,7 @@ export default async function Home() {
                 <section className="flex w-full flex-col items-center justify-center gap-8 p-16">
                     {/* Logo image */}
 
-                    <Image src={"/logo.png"} width={256} height={0} alt={`${preferences.brand.displayName} logo`} />
+                    <Image src={"/logo-inverted.png"} width={256} height={0} alt={`${preferences.brand.displayName} logo`} />
 
                     {/* Divider */}
 
