@@ -9,6 +9,7 @@ import { db } from "~/server/db"
 import { mysqlTable } from "~/utils"
 import { createSenderIdentity, sendVerificationRequest } from "~/utils"
 import { type DefaultSession, getServerSession, type NextAuthOptions } from "next-auth"
+import { type EmailConfig } from "next-auth/providers/email"
 
 /**
  * Adds types to `next-auth` via module augmentation.
@@ -49,7 +50,7 @@ export const authOptions: NextAuthOptions = {
             name: "Email",
             options: {},
             sendVerificationRequest
-        }
+        } satisfies EmailConfig
     ],
 
     callbacks: {

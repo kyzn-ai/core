@@ -15,7 +15,7 @@ export default {
 
     //  Credentials to connect to the database
 
-    dbCredentials: { connectionString: env.DATABASE_URL },
+    dbCredentials: { uri: env.DATABASE_URL },
 
     tablesFilter: ["amnesia_*"]
 } satisfies Config
