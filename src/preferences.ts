@@ -3,7 +3,8 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import preferences from "../app.config"
+import appConfig from "../app.config"
+import { createDisplayUrl } from "~/utils"
 import { z } from "zod"
 
 //  Define a schema to validate the configuration data
@@ -17,18 +18,21 @@ const appConfigSchema = z.object({
         emails: z.object({
             auth: z.string().email(),
             support: z.string().email()
+        }),
+        urls: z.object({
+            primary: z.string().transform(value => createDisplayUrl({ from: value }))
         })
     })
 })
 
-//  Export a type inferred from the schema
+//  Export an input type inferred from the schema
 
-export type AppConfig = z.infer<typeof appConfigSchema>
+export type AppConfig = z.input<typeof appConfigSchema>
 
-//  Validate the configuration data against the schema
+//  Infer an output type from the schema (equivalent to `z.output`)
 
-const validatedConfig: AppConfig = appConfigSchema.parse(preferences)
+type Preferences = z.infer<typeof appConfigSchema>
 
-//  Export the validated configuration for use throughout the application
+//  Validate the configuration data against the schema, and export for use throughout the application
 
-export { validatedConfig as preferences }
+export const preferences: Preferences = appConfigSchema.parse(appConfig)

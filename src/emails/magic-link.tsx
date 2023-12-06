@@ -34,7 +34,7 @@ import { preferences } from "~/preferences"
 interface MagicLinkProps {
     authLink: string
     brandDisplayName?: string
-    baseURL?: string
+    displayUrl?: string
     logoURL?: string
     supportEmail?: string
     recipientFirstName?: string
@@ -42,7 +42,7 @@ interface MagicLinkProps {
     expires: Date
 }
 
-export function MagicLink({ authLink, brandDisplayName = preferences.brand.displayName, baseURL = env.BASE_URL, logoURL = `${baseURL}/logo.png`, supportEmail = preferences.brand.emails.support, recipientFirstName, recipientEmail, expires }: MagicLinkProps): JSX.Element {
+export function MagicLink({ authLink, brandDisplayName = preferences.brand.displayName, displayUrl = preferences.brand.urls.primary.absolute, logoURL = `${env.BASE_URL}/logo.png`, supportEmail = preferences.brand.emails.support, recipientFirstName, recipientEmail, expires }: MagicLinkProps): JSX.Element {
     const preview = `Sign in to ${brandDisplayName}`
 
     return (
@@ -92,8 +92,8 @@ export function MagicLink({ authLink, brandDisplayName = preferences.brand.displ
 
                         <Text className="text-[12px] leading-[24px] text-[#666666]">
                             If you were not expecting this request, you can ignore this email. Visit{" "}
-                            <Link href={baseURL} className="text-black no-underline">
-                                {baseURL}
+                            <Link href={displayUrl} className="text-black no-underline">
+                                {displayUrl}
                             </Link>{" "}
                             for more information, or get in touch with us at{" "}
                             <Link href={supportEmail} className="text-black no-underline">

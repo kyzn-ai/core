@@ -11,7 +11,7 @@ import { type AppConfig } from "~/preferences"
 
 //  Define build-time values for use throughout the application
 
-const _preferences: AppConfig = {
+const appConfig: AppConfig = {
     brand: {
         displayName: "AMNESIA",
         tagline: "Meet the Future You",
@@ -20,8 +20,12 @@ const _preferences: AppConfig = {
         emails: {
             auth: "auth@amnesia.onambrosia.app",
             support: "support@amnesia.onambrosia.app"
+        },
+
+        urls: {
+            primary: "https://amnesia.onambrosia.app"
         }
     }
 } as const
 
-export default _preferences
+export default appConfig
