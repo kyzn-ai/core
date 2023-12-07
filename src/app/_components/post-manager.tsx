@@ -9,7 +9,7 @@ import { api } from "~/trpc/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export function PostManager() {
+export function PostManager(): JSX.Element {
     //  Get the router so we can refresh the page
 
     const router = useRouter()

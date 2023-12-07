@@ -9,9 +9,12 @@ import { createTRPCContext } from "~/server/api/trpc"
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
 import { type NextRequest } from "next/server"
 
+
+
 /**
  * @description Wraps the `createTRPCContext` helper and provides the required context for the tRPC API when handling a tRPC request via HTTP (e.g, when you make requests from Client Components)
  */
+/* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
 const createContext = async (req: NextRequest) => {
     return createTRPCContext({
         headers: req.headers
@@ -20,7 +23,7 @@ const createContext = async (req: NextRequest) => {
 
 //  Handles incoming requests to the tRPC API
 
-const handler = (req: NextRequest) =>
+const handler = (req: NextRequest): Promise<Response> =>
     //  Passes the `NextRequest` params to the `fetchRequestHandler` helper
     fetchRequestHandler({
         //  The location of this route
@@ -32,7 +35,7 @@ const handler = (req: NextRequest) =>
 
         //  Logs errors in development
 
-        onError: env.NODE_ENV === "development" ? ({ path, error }) => console.error(`tRPC failed on ${path ?? "<no-path>"}: ${error.message}`) : undefined
+        onError: env.NODE_ENV === "development" ? ({ path, error }): void => console.error(`tRPC failed on ${path ?? "<no-path>"}: ${error.message}`) : undefined
     })
 
 export { handler as GET, handler as POST }

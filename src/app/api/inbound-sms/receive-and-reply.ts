@@ -50,7 +50,7 @@ interface receiveAndReplyOptions {
 
 //  Twilio request handling
 
-export default async function receiveAndReply({ request, createMessage = params => `Message received: "${params.Body}" from ${params.From}`, debug = false }: receiveAndReplyOptions): Promise<NextResponse> {
+export default async function receiveAndReply({ request, createMessage = (params): string => `Message received: "${params.Body}" from ${params.From}`, debug = false }: receiveAndReplyOptions): Promise<NextResponse> {
     try {
         //  Decode the incoming request body
 

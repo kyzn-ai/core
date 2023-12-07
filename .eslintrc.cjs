@@ -2,7 +2,9 @@
  * @file Configures ESLint.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- *  @type { import ( "eslint" ) .Linter.Config }
+ * @todo DEPRIORITIZED: Re-enable `explicit-function-return-type` and fix warnings.
+ * @todo DEPRIORITIZED: Go through all eslint rules and configure them.
+ * @type { import ( "eslint" ) .Linter.Config }
  */
 
 const config = {
@@ -14,7 +16,7 @@ const config = {
 
     rules: {
         "@typescript-eslint/array-type": "off",
-        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/consistent-type-definitions": "warn",
 
         "@typescript-eslint/consistent-type-imports": [
             "warn",
@@ -25,6 +27,7 @@ const config = {
             }
         ],
 
+        "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
 
         "@typescript-eslint/require-await": "off",

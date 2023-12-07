@@ -11,8 +11,10 @@ import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
 import { IBM_Plex_Mono, Inter } from "next/font/google"
 import { cookies } from "next/headers"
+import { cn } from "~/utils"
+import { ThemeProvider } from "~/components/theme-provider"
 
-//  Import Google fonts
+//  Import fonts
 
 const inter = Inter({
     subsets: ["latin"],
@@ -33,15 +35,45 @@ export const metadata = {
     icons: [{ rel: "icon", url: "/favicon.png" }]
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
     return (
         <html lang="en">
-            {/* Create font CSS variables */}
+            {/* Body */}
 
-            <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${inter.variable} ${ibmPlexMono.variable} bg-gradient-to-tr from-black to-[#222222] text-sm text-white`}>
-                {/* TRPC uses cookies to store and retrieve sessions */}
+            <body
+                className={cn(
+                    // Integrates typefaces
 
-                <TRPCReactProvider cookies={cookies().toString()}>{children}</TRPCReactProvider>
+                    "min-h-screen bg-background font-sans antialiased",
+                    GeistSans.variable,
+                    GeistMono.variable,
+                    inter.variable,
+                    ibmPlexMono.variable
+                )}
+            >
+                {/* TRPC provider */}
+
+                <TRPCReactProvider
+                    //  Uses cookies to store and retrieve sessions
+
+                    cookies={cookies().toString()}
+                >
+                    {/* Theme provider */}
+
+                    <ThemeProvider
+                        //  Uses the `.dark` class to determine the theme
+
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        {children}
+                    </ThemeProvider>
+                </TRPCReactProvider>
+
+                {/* Vercel analytics */}
+
                 <Analytics />
             </body>
         </html>

@@ -6,11 +6,11 @@
  */
 
 import receiveAndReply from "~/app/api/inbound-sms/receive-and-reply"
-import { type NextRequest } from "next/server"
+import { type NextResponse, type NextRequest } from "next/server"
 
 //  Handle incoming Twilio requests
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
     //  Reply to the sender
 
     return await receiveAndReply({
