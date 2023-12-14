@@ -5,6 +5,8 @@
  * @remarks Why not make this a JSON file?
  *
  * JSON files don't enforce types, so we can't validate the configuration data against a schema. Creating a configuration in Typescript also allows us to create dynamic data, for when you need to fetch information or reference an existing property (e.g, using a getter).
+ *
+ * @todo DEPRIORITIZED: Maybe move the tagline and description to the `en` locale?
  */
 
 import { type AppConfig } from "~/preferences"

@@ -3,11 +3,11 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { env } from "~/env"
-import * as schema from "~/server/db/schemas/index"
+import * as Schema from "./schemas"
 import { Client } from "@planetscale/database"
+import { env } from "~/env"
 import { drizzle } from "drizzle-orm/planetscale-serverless"
 
-//  Uses the database URL and schemas to configure the ORM
+//  Uses the database URL and schema to configure the ORM
 
-export const db = drizzle(new Client({ url: env.DATABASE_URL }).connection(), { schema })
+export const db = drizzle(new Client({ url: env.DATABASE_URL }).connection(), { schema: Schema })

@@ -1,5 +1,5 @@
 /**
- * @file Helper function for creating tables for multiple projects under the same database.
+ * @file Helper function for creating tables for multiple projects inside the same database.
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 

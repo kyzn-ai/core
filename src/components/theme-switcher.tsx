@@ -1,5 +1,5 @@
 /**
- * @file ?
+ * @file A dropdown for switching between light mode, dark mode, and the system theme.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
  * @todo
@@ -7,14 +7,12 @@
 
 "use client"
 
-import * as React from "react"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components"
 import { useTheme } from "next-themes"
+import * as React from "react"
 
-import { Button } from "~/components/primitives/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/primitives/dropdown-menu"
-
-export function ModeToggle() {
+export function ThemeSwitcher() {
     const { setTheme } = useTheme()
 
     return (

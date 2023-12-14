@@ -6,15 +6,15 @@
 import { preferences } from "~/preferences"
 
 interface SenderIdentityOptions {
-    name?: string
-    organization?: string
+    name?: string | null
+    organization?: string | null
     email: string
 }
 
 export const createSenderIdentity = ({ name, organization = preferences.brand.displayName, email = preferences.brand.emails.support }: SenderIdentityOptions): string => {
     //  Check if the name is missing
 
-    if (!name) {
+    if (name !== null && !name) {
         name = email
 
             //  Grab the first part of the email address
@@ -33,5 +33,21 @@ export const createSenderIdentity = ({ name, organization = preferences.brand.di
             .join(" ")
     }
 
-    return `${name} — ${organization} <${email}>`
+    switch (true) {
+        //  Name and organization
+        case name !== null && organization !== null:
+            return `${name} — ${organization} <${email}>`
+
+        //  Name only
+        case name !== null:
+            return `${name} <${email}>`
+
+        //  Organization only
+        case organization !== null:
+            return `${organization} <${email}>`
+
+        //  No identifier
+        default:
+            return `<${email}>`
+    }
 }

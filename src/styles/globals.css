@@ -1,4 +1,9 @@
-/* @todo */
+/**
+ * @file The global CSS styles for the application.
+ * @author Riley Barabash <riley@rileybarabash.com>
+ *
+ * @todo
+ */
 
 @tailwind base;
 @tailwind components;

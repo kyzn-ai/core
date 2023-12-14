@@ -1,7 +1,6 @@
 /**
- * @file Combines and re-exports all of the schemas.
+ * @file Re-exports all of the schemas from one file for convenience.
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-export * from "~/server/db/schemas/auth"
-export * from "~/server/db/schemas/misc"
+export * from "./auth"

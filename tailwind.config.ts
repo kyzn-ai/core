@@ -13,7 +13,7 @@ export default {
 
     //  All of the pages to parse for Tailwind classes
 
-    content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+    content: ["./src/**/*.{ts,tsx}"],
 
     theme: {
         //  A container utility that you can use to center and horizontally pad your content
@@ -44,6 +44,12 @@ export default {
             transitionTimingFunction: {
                 "out-expo": "cubic-bezier(0.125, 1.0, 0.25, 1.0)",
                 "in-out-expo": "cubic-bezier(0.875, 0.0, 0.125, 1.0)"
+            },
+
+            //  Duration presets for animation
+
+            transitionDuration: {
+                "5000": "5000ms"
             },
 
             //  Extends the default color palette
@@ -116,6 +122,8 @@ export default {
             //  Animation presets
 
             animation: {
+                //  The accordion component
+
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out"
             }

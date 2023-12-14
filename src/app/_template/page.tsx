@@ -3,17 +3,15 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { Button } from "~/components/primitives/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/primitives/card"
-import { Skeleton } from "~/components/primitives/skeleton"
+import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Skeleton } from "~/components"
 
-export default async function Template(): Promise<JSX.Element> {
+export default function PageTitle(): JSX.Element {
     return (
         <>
             {/* Main tag */}
 
             <main className="container flex min-h-screen w-full flex-col items-center justify-center">
-                {/* Section one */}
+                {/* Section 1 */}
 
                 <section className="flex h-screen w-full flex-col items-center justify-center">
                     {/* Placeholder content */}
@@ -22,7 +20,7 @@ export default async function Template(): Promise<JSX.Element> {
                         <CardHeader>
                             <CardTitle>Page Template</CardTitle>
 
-                            <CardDescription>This card is a placeholder for your content.</CardDescription>
+                            <CardDescription>This card is a placeholder for the page content.</CardDescription>
                         </CardHeader>
 
                         <CardContent>

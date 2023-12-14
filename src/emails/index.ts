@@ -3,4 +3,4 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-export * from "~/emails/magic-link"
+export * from "./magic-link"

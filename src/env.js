@@ -57,7 +57,7 @@ export const env = createEnv({
         )
     },
 
-    //  You can't access `process.env` as a regular object in the Next.js edge runtimes (e.g. middlewares) or client-side, so we need to destructure manually for use cases that require the original environment variable values
+    //  You can't access `process.env` as a regular object in the Next.js edge runtimes (e.g., middlewares) or client-side, so we need to destructure manually for use cases that require the original environment variable values
 
     runtimeEnv: {
         NODE_ENV: process.env.NODE_ENV,

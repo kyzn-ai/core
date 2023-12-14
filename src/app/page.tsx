@@ -1,115 +1,64 @@
 /**
- * @file The home page for the app. This is the first thing that users will see when they navigate to our site.
+ * @file The landing page for the app.
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { PostManager } from "~/app/_components/post-manager"
-import { preferences } from "~/preferences"
+import { Button, Card, CardContent, Pattern, SVG } from "~/components"
 import { getServerAuthSession } from "~/server/auth"
-import { api } from "~/trpc/server"
-import Image from "next/image"
+import { type Session } from "next-auth"
 import Link from "next/link"
 
-export default async function Home() {
-    //  Returns the current user's session if they are logged in
+export default async function Root(): Promise<JSX.Element> {
+    //  Get the server session
 
-    const session = await getServerAuthSession()
-
-    //  Some example tRPC queries to the experimental router
-
-    const testQuery = await api.experimental.test.query({ fromClient: "request from client" + " | " })
-    const protectedTestQuery = session?.user ? await api.experimental.protectedTest.query() : null
+    const session: Session | null = await getServerAuthSession()
 
     return (
         <>
-            {/* Default to "flex w-full flex-col items-center justify-center" on all divs */}
+            {/* Main tag */}
 
             <main className="flex min-h-screen w-full flex-col items-center justify-center">
-                {/* Hero section */}
+                {/* Background pattern */}
 
-                <section className="flex w-full flex-col items-center justify-center gap-8 p-16">
-                    {/* Logo image */}
+                <Pattern className="max-w-100vw fixed -z-10 min-h-screen w-full" align="center">
+                    {/* Grid */}
 
-                    <Image src={"/logo-inverted.png"} width={256} height={0} alt={`${preferences.brand.displayName} logo`} />
+                    <SVG.Grid />
+                </Pattern>
 
-                    {/* Divider */}
+                {/* Container */}
 
-                    <div className="flex h-px w-full max-w-[64px] flex-col items-center justify-center bg-[#808080] bg-opacity-25" />
+                <div className="flex w-full flex-col items-center justify-center">
+                    {/* Section 1 */}
 
-                    {/* Test query wrapper */}
+                    <section className="flex h-screen w-full flex-col items-center justify-center gap-8 px-8">
+                        {/* Modal */}
 
-                    <div className="flex w-full flex-col items-center justify-center gap-4">
-                        {/* Public query */}
+                        <Card>
+                            {/* Card content */}
 
-                        <p className="rounded-md border border-[#808080] border-opacity-25 bg-gradient-to-tr from-black to-[#222222] px-4 py-2 font-mono">{testQuery?.fromServer ?? "Loading..."}</p>
+                            <CardContent className="flex w-full flex-col items-center justify-center gap-8 px-8 py-8">
+                                {/* Logo image */}
 
-                        {/* Protected query */}
+                                <SVG.Logo width={256} />
 
-                        <p className={`rounded-md border border-[#808080] border-opacity-25 bg-gradient-to-tr from-black to-[#222222] px-4 py-2 font-mono ${!!protectedTestQuery ? "text-[#0080FF]" : "text-red-500"}`}>
-                            <span className="text-[#808080]">Secret message: </span>
-                            {protectedTestQuery ?? "not authenticated"}
-                        </p>
-                    </div>
+                                {/* Get started button */}
 
-                    {/* Button + auth status container */}
+                                <Button asChild={true} variant={"outline"}>
+                                    <Link className="font-mono font-[700]" href={!!session ? "/dashboard" : "/signin"}>
+                                        Get started
+                                    </Link>
+                                </Button>
 
-                    <div className="flex w-full flex-col items-center justify-center gap-4">
-                        {/* Authentication status */}
+                                {/* Divider */}
 
-                        <p>{session && <span>Logged in as {session.user?.name}</span>}</p>
-
-                        {/* Sign in button */}
-
-                        <Link href={session ? "/api/auth/signout" : "/api/auth/signin"} className="rounded-md bg-gradient-to-tr from-[#DDDDDD] to-white px-8 py-2 text-black no-underline transition duration-500 ease-out-expo hover:opacity-50">
-                            {session ? "Sign out" : "Sign in"}
-                        </Link>
-                    </div>
-
-                    {/* Post creation example */}
-
-                    <PostDemo />
-                </section>
+                                {/* Growth updates opt-in */}
+                                {/* Want to recieve updates? -> (phone input) "Count me in" */}
+                            </CardContent>
+                        </Card>
+                    </section>
+                </div>
             </main>
-        </>
-    )
-}
-
-async function PostDemo() {
-    //  Get auth session, returning null if the user is not logged in
-
-    const session = await getServerAuthSession()
-    if (!session?.user) return null
-
-    //  Get the user's latest post
-
-    const mostRecentPost = await api.posts.getMostRecent.query()
-
-    return (
-        <>
-            {/* Divider */}
-
-            <div className="flex h-px w-full max-w-[64px] flex-col items-center justify-center bg-[#808080] bg-opacity-25" />
-
-            {/* Card */}
-
-            <div className="flex w-full max-w-xs flex-col items-center justify-center gap-4 rounded-md border border-[#808080] border-opacity-25 p-4">
-                {/* User's latest post */}
-
-                <p className="w-full truncate py-2">
-                    {!!mostRecentPost ? (
-                        <>
-                            <span className="font-bold">Recently: </span>
-                            {mostRecentPost.content}
-                        </>
-                    ) : (
-                        "No posts yet."
-                    )}
-                </p>
-
-                {/* Create post form */}
-
-                <PostManager />
-            </div>
         </>
     )
 }
