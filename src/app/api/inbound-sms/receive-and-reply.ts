@@ -2,7 +2,7 @@
  * @file Accepts and transforms a NextRequest from the Twilio messaging API, and returns a NextResponse.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Abstract into a more versatile utility that can be used for different applications. Maybe move to "~/lib"?
+ * @todo DEPRIORITIZED: Abstract into a more versatile utility that can be used for different applications, or individual functions for receiving and sending SMS messages. Maybe move to "~/lib"?
  */
 
 import { NextResponse, type NextRequest } from "next/server"
@@ -10,7 +10,7 @@ import { twiml } from "twilio"
 
 //  Shape of the incoming Twilio request
 
-interface TwilioParams {
+export interface TwilioParams {
     ToCountry: string
     ToState: string
     SmsMessageSid: string
@@ -41,7 +41,7 @@ interface receiveAndReplyOptions {
 
     //  The response message
 
-    createMessage?: (params: TwilioParams) => string | void
+    createMessage?: (params: TwilioParams) => Promise<string | void>
 
     //  Logs the request params to the console
 
@@ -50,7 +50,7 @@ interface receiveAndReplyOptions {
 
 //  Twilio request handling
 
-export default async function receiveAndReply({ request, createMessage = (params): string => `Message received: "${params.Body}" from ${params.From}`, debug = false }: receiveAndReplyOptions): Promise<NextResponse> {
+export default async function receiveAndReply({ request, createMessage = async (params): Promise<string> => `Message received: "${params.Body}" from ${params.From}`, debug = false }: receiveAndReplyOptions): Promise<NextResponse> {
     try {
         //  Decode the incoming request body
 
@@ -72,7 +72,7 @@ export default async function receiveAndReply({ request, createMessage = (params
 
         //  Construct a response
 
-        const twimlResponse = new twiml.MessagingResponse().message(createMessage(params) ?? "")
+        const twimlResponse = new twiml.MessagingResponse().message((await createMessage(params)) ?? "")
 
         const response = twimlResponse.toString() as string
 

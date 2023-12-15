@@ -5,10 +5,12 @@
  * @todo DEPRIORITIZED: Consolidate database column name casing and conventions. Auth.js uses camelCase for its database rows while respecting the conventional snake_case formatting for OAuth-related values. The Drizzle adapter does not yet support forced casing conventions.
  */
 
+import { campaigns } from "."
 import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations, sql } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
 import { type AdapterAccount } from "next-auth/adapters"
+import { v4 as uuid } from "uuid"
 
 //  A table for storing user data (required by Auth.js)
 
@@ -18,17 +20,24 @@ export const users = mysqlTable(
     "user",
 
     {
-        //  A column named "id" of type varchar with a maximum length of 255 characters, that is a primary key and cannot be null (required by Auth.js)
+        //  A column named "id" of type varchar with a maximum length of 255 characters, that is a primary key, defaults to a UUID string, and cannot be null (required by Auth.js)
 
-        id: varchar("id", { length: 255 }).notNull().primaryKey(),
+        id: varchar("id", { length: 255 })
+            .notNull()
+            .$defaultFn(uuid)
+            .primaryKey(),
 
         //  A column named "name" of type varchar with a maximum length of 255 characters (required by Auth.js)
 
         name: varchar("name", { length: 255 }),
 
-        //  A column named "email" of type varchar with a maximum length of 255 characters, that cannot be null (required by Auth.js)
+        //  A column named "email" of type varchar with a maximum length of 255 characters (required by Auth.js)
 
-        email: varchar("email", { length: 255 }).notNull(),
+        email: varchar("email", { length: 255 }),
+
+        //  A column named "phoneNumber" of type varchar with a maximum length of 255 characters
+
+        phoneNumber: varchar("phoneNumber", { length: 15 }),
 
         //  A column named "emailVerified" of type timestamp with a default value of the current time (with fractional seconds precision of 3) (required by Auth.js)
 
@@ -40,7 +49,15 @@ export const users = mysqlTable(
         //  A column named "image" of type varchar with a maximum length of 255 characters (required by Auth.js)
 
         image: varchar("image", { length: 255 })
-    }
+    },
+
+    //  Accepts the user schema, and returns an object containing the table's indices
+
+    user => ({
+        //  An index named "phoneNumber_idx" on the "phoneNumber" column
+
+        phoneNumberIdx: index("phoneNumber_idx").on(user.phoneNumber)
+    })
 )
 
 //  The relations for the "users" table
@@ -52,7 +69,11 @@ export const usersRelations = relations(users, ({ many }) => ({
 
     //  A "many" relation named "sessions" between the "users" and "sessions" tables — meaning that one user can have many associated sessions
 
-    sessions: many(sessions)
+    sessions: many(sessions),
+
+    //  A "many" relation named "campaigns" between the "users" and "campaigns" tables — meaning that one user can have many associated campaigns
+
+    campaigns: many(campaigns)
 }))
 
 //  A table for storing account data (required by Auth.js)
@@ -113,7 +134,7 @@ export const accounts = mysqlTable(
     account => ({
         //  A primary key named "compoundKey" on the "provider" and "providerAccountId" columns (required by Auth.js)
 
-        compoundKey: primaryKey(account.provider, account.providerAccountId),
+        compoundKey: primaryKey({ columns: [account.provider, account.providerAccountId] }),
 
         //  An index named "userId_idx" on the "userId" column
 
@@ -190,6 +211,6 @@ export const verificationTokens = mysqlTable(
     verificationToken => ({
         //  A primary key named "compoundKey" on the "identifier" and "token" columns (required by Auth.js)
 
-        compoundKey: primaryKey(verificationToken.identifier, verificationToken.token)
+        compoundKey: primaryKey({ columns: [verificationToken.identifier, verificationToken.token] })
     })
 )

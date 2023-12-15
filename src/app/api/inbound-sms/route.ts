@@ -2,15 +2,12 @@
  * @file The endpoint that recieves inbound SMS message requests from Twilio.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo Store opt-ins in a database.
- * @todo Refactor `receiveAndReply` into individual lib functions for receiving and sending SMS messages.
- * @todo DEPRIORITIZED: Add a security check to only allow requests from Twilio.
+ * @todo DEPRIORITIZED: Add a security check to only allow incoming requests from Twilio.
  */
 
-import receiveAndReply from "~/app/api/inbound-sms/receive-and-reply"
-import { en } from "~/i18n/locales"
-import { toTitleCase } from "~/utils"
+import receiveAndReply, { type TwilioParams } from "~/app/api/inbound-sms/receive-and-reply"
 import { type NextResponse, type NextRequest } from "next/server"
+import { api } from "~/trpc/server"
 
 //  Handle incoming Twilio requests
 
@@ -19,29 +16,30 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     return await receiveAndReply({
         request: req,
-        createMessage: ({ Body: content, From: sender }) => handleOptIn({ content, sender }),
+        createMessage: responseCoordinator,
         debug: true
     })
 }
 
-//  Temporary opt-in flow
+//  Manages the use of response campaigns
 
-const handleOptIn = ({ content, sender }: { content: string; sender: string }): string => {
-    if (content.toLowerCase().trim() !== "yes") {
-        //  Log the inbound message (debug only)
+const responseCoordinator = async (params: TwilioParams): Promise<string> => {
+    //  The default response
 
-        console.log(`New inbound SMS from ${sender}: ${content}`)
+    return await growthUpdates(params)
+}
 
-        //  Reply to the sender
+//  The campaign flow for opting in to growth updates
 
-        return en.preflight.optIn.opener({ firstName: toTitleCase(content.trim()) })
-    } else {
-        //  Log the opt-in candidate (debug only) — should be added to the database and sent as a notification to admin
+const growthUpdates = async ({ From: sender }: TwilioParams): Promise<string> => {
+    //  Attempt to get the user's ID
 
-        console.log(`New opt-in from ${sender}`)
+    const id: string | undefined = await api.users.getId.query({ phoneNumber: sender })
 
-        //  Return the response
+    //  Create a new user if they don't exist and return their ID, otherwise return the original ID
 
-        return en.preflight.optIn.confirmation
-    }
+    if (!id) return `New user: ${await api.users.create.mutate({ phoneNumber: sender })}`
+    else return `Existing user: ${id}`
+
+    //  Create a campaign, store the campaign step, use the campaign step to determine the response, use the response to update the campaign and user data...
 }

@@ -3,14 +3,15 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { experimentalRouter } from "./routers"
+import { experimentalRouter, usersRouter } from "./routers"
 import { createTRPCRouter } from "./trpc"
 
 /**
  * @description This is the primary router for your server. All routers added in "~/server/api/routers" should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-    experimental: experimentalRouter
+    experimental: experimentalRouter,
+    users: usersRouter
 })
 
 //  Export the type definition of the API
