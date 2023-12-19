@@ -3,9 +3,11 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  *
  * @todo DEPRIORITIZED: Consolidate database column name casing and conventions. Auth.js uses camelCase for its database rows while respecting the conventional snake_case formatting for OAuth-related values. The Drizzle adapter does not yet support forced casing conventions.
+ * @todo DEPRIORITIZED: Extract each table into its own file.
+ * @todo DEPRIORITIZED: Consider renaming all schema names to be singular, which would uphold the expressiveness of the table names.
  */
 
-import { campaigns } from "."
+import { schema } from "~/server/db"
 import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations, sql } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
@@ -22,10 +24,7 @@ export const users = mysqlTable(
     {
         //  A column named "id" of type varchar with a maximum length of 255 characters, that is a primary key, defaults to a UUID string, and cannot be null (required by Auth.js)
 
-        id: varchar("id", { length: 255 })
-            .notNull()
-            .$defaultFn(uuid)
-            .primaryKey(),
+        id: varchar("id", { length: 255 }).notNull().$defaultFn(uuid).primaryKey(),
 
         //  A column named "name" of type varchar with a maximum length of 255 characters (required by Auth.js)
 
@@ -33,11 +32,11 @@ export const users = mysqlTable(
 
         //  A column named "email" of type varchar with a maximum length of 255 characters (required by Auth.js)
 
-        email: varchar("email", { length: 255 }),
+        email: varchar("email", { length: 255 }).unique(),
 
-        //  A column named "phoneNumber" of type varchar with a maximum length of 255 characters
+        //  A column named "phone" of type varchar with a maximum length of 255 characters
 
-        phoneNumber: varchar("phoneNumber", { length: 15 }),
+        phone: varchar("phone", { length: 15 }).unique(),
 
         //  A column named "emailVerified" of type timestamp with a default value of the current time (with fractional seconds precision of 3) (required by Auth.js)
 
@@ -54,26 +53,34 @@ export const users = mysqlTable(
     //  Accepts the user schema, and returns an object containing the table's indices
 
     user => ({
-        //  An index named "phoneNumber_idx" on the "phoneNumber" column
+        //  An index named "email_idx" on the "email" column
 
-        phoneNumberIdx: index("phoneNumber_idx").on(user.phoneNumber)
+        emailIdx: index("email_idx").on(user.email),
+
+        //  An index named "phone_idx" on the "phone" column
+
+        phoneIdx: index("phone_idx").on(user.phone)
     })
 )
 
-//  The relations for the "users" table
+//  The relations for the "user" table
 
 export const usersRelations = relations(users, ({ many }) => ({
-    //  A "many" relation named "accounts" between the "users" and "accounts" tables — meaning that one user can have many associated accounts
+    //  A many relation named "accounts" between the "user" and "account" tables — meaning that one user can have many associated accounts
 
     accounts: many(accounts),
 
-    //  A "many" relation named "sessions" between the "users" and "sessions" tables — meaning that one user can have many associated sessions
+    //  A many relation named "sessions" between the "user" and "session" tables — meaning that one user can have many associated sessions
 
     sessions: many(sessions),
 
-    //  A "many" relation named "campaigns" between the "users" and "campaigns" tables — meaning that one user can have many associated campaigns
+    //  A many relation named "flows" between the "user" and "flow" tables — meaning that one user can have many associated flows
 
-    campaigns: many(campaigns)
+    flows: many(schema.flows),
+
+    //  A many relation named "usersToCampaigns" between the "user" and "user_to_campaign" tables — meaning that one user can have many associated campaigns, and one campaign can have many associated users
+
+    campaigns: many(schema.usersToCampaigns)
 }))
 
 //  A table for storing account data (required by Auth.js)
@@ -142,10 +149,10 @@ export const accounts = mysqlTable(
     })
 )
 
-//  The relations for the "accounts" table
+//  The relations for the "account" table
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
-    //  A "one" relation named "user" between the "accounts" and "users" tables — meaning that one account is associated with one user
+    //  A one relation named "user" between the "account" and "user" tables — meaning that one account is associated with one user
 
     user: one(users, { fields: [accounts.userId], references: [users.id] })
 }))
@@ -180,10 +187,10 @@ export const sessions = mysqlTable(
     })
 )
 
-//  The relations for the "sessions" table
+//  The relations for the "session" table
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-    //  A "one" relation named "user" between the "sessions" and "users" tables — meaning that one session is associated with one user
+    //  A one relation named "user" between the "session" and "user" tables — meaning that one session is associated with one user
 
     user: one(users, { fields: [sessions.userId], references: [users.id] })
 }))

@@ -6,13 +6,14 @@
  */
 
 import receiveAndReply, { type TwilioParams } from "~/app/api/inbound-sms/receive-and-reply"
-import { type NextResponse, type NextRequest } from "next/server"
+import { optIn } from "~/lib/flows"
 import { api } from "~/trpc/server"
+import { type NextResponse, type NextRequest } from "next/server"
 
 //  Handle incoming Twilio requests
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    //  Reply to the sender
+    //  Generate a response and send it back to Twilio
 
     return await receiveAndReply({
         request: req,
@@ -21,25 +22,30 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     })
 }
 
-//  Manages the use of response campaigns
+//  Manages the use of response flows
 
-const responseCoordinator = async (params: TwilioParams): Promise<string> => {
-    //  The default response
+const responseCoordinator = async ({ Body: content, From: sender, ..._ }: TwilioParams): Promise<string> => {
+    //  Get the sender's user ID, creating a new user if they don't exist & storing the returned ID
 
-    return await growthUpdates(params)
-}
+    const { id: userId } = (await api.users.get.query({ phone: sender })) ?? (await api.users.create.mutate({ phone: sender }))
 
-//  The campaign flow for opting in to growth updates
+    //  TODO: Switch over the available flows, choosing the appropriate one based on the sender's response & the most recent flow (get the `name` column from the most recent row in the `flows` table that matches the `userId`)
 
-const growthUpdates = async ({ From: sender }: TwilioParams): Promise<string> => {
-    //  Attempt to get the user's ID
+    /*
 
-    const id: string | undefined = await api.users.getId.query({ phoneNumber: sender })
+    const flowName: string = await api.flows.getLatestName.query({ userId })
 
-    //  Create a new user if they don't exist and return their ID, otherwise return the original ID
+    switch (content.toLowerCase().trim()) {
 
-    if (!id) return `New user: ${await api.users.create.mutate({ phoneNumber: sender })}`
-    else return `Existing user: ${id}`
+        //  If the sender resonds with "ai", opt them in to growth updates
 
-    //  Create a campaign, store the campaign step, use the campaign step to determine the response, use the response to update the campaign and user data...
+        case "ai": break
+
+    }
+    
+    */
+
+    //  Catch all (the default response)
+
+    return await optIn.growthUpdates({ userId, content })
 }

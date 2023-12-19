@@ -5,7 +5,7 @@
 
 "use client"
 
-import { createSVG, type SVG } from "../create-svg"
+import { createSVG, type SVG } from "~/components/svgs/create-svg"
 
 export const GitHub: SVG = createSVG(props => (
     <svg viewBox="0 0 438.549 438.549" {...props}>

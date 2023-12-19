@@ -3,13 +3,14 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { experimentalRouter, usersRouter } from "./routers"
-import { createTRPCRouter } from "./trpc"
+import { campaignsRouter, experimentalRouter, usersRouter } from "~/server/api/routers"
+import { createTRPCRouter } from "~/server/api/trpc"
 
 /**
  * @description This is the primary router for your server. All routers added in "~/server/api/routers" should be manually added here.
  */
 export const appRouter = createTRPCRouter({
+    campaigns: campaignsRouter,
     experimental: experimentalRouter,
     users: usersRouter
 })

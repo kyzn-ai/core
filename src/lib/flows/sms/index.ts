@@ -1,5 +1,5 @@
 /**
- * @file Re-exports all English localizable content from one file for convenience.
+ * @file Re-exports all SMS flows from one file for convenience.
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 

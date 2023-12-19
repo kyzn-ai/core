@@ -5,7 +5,7 @@
 
 "use client"
 
-import { createSVG, type SVG } from "../create-svg"
+import { createSVG, type SVG } from "~/components/svgs/create-svg"
 
 export const Logo: SVG = createSVG(({ squareBounds = false, viewBox, ...props }) => (
     <svg viewBox={viewBox ?? squareBounds ? "0 0 4096 4096" : "0 1851.6166 4096 392.7668"} fill="currentColor" {...props}>

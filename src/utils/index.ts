@@ -8,8 +8,10 @@
 export * from "./cn"
 export * from "./create-display-url"
 export * from "./create-sender-identity"
+export * from "./custom-error"
 export * from "./format-duration"
 export * from "./multi-project-schema"
+export * from "./resolve-trpc-error"
 export * from "./to-title-case"
 
 //  You, sir, are very frustrating (investigate)
