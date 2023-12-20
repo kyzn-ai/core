@@ -4,6 +4,7 @@
  */
 
 import { env } from "~/env"
+import { preferences } from "~/preferences"
 import { type Config } from "drizzle-kit"
 
 export default {
@@ -17,5 +18,11 @@ export default {
 
     dbCredentials: { uri: env.DATABASE_URL },
 
-    tablesFilter: ["amnesia_*"]
+    //  A glob pattern that selects the tables to push and introspect
+
+    tablesFilter: `${preferences.brand.displayName.toLowerCase()}_${
+        //  If the Multi-Project Schema test strategy is selected and the app is not running in prod, postfix the database table prefix with "test_"
+
+        env.TEST_DATABASE_STRATEGY === "mps" && (env.DATABASE_ENV ?? env.NODE_ENV) !== "production" ? "test_" : ""
+    }*`
 } satisfies Config

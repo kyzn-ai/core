@@ -53,6 +53,9 @@ dependencies:
   '@trpc/server':
     specifier: ^10.44.1
     version: 10.44.1
+  '@tunnel/cli':
+    specifier: ^0.4.5
+    version: 0.4.5
   '@vercel/analytics':
     specifier: ^1.1.1
     version: 1.1.1
@@ -2622,6 +2625,11 @@ packages:
   /@trpc/server@10.44.1:
     resolution: {integrity: sha512-mF7B+K6LjuboX8I1RZgKE5GA/fJhsJ8tKGK2UBt3Bwik7hepEPb4NJgNr7vO6BK5IYwPdBLRLTctRw6XZx0sRg==}
     engines: {node: '>=18.0.0'}
+    dev: false
+
+  /@tunnel/cli@0.4.5:
+    resolution: {integrity: sha512-diQs/Gd2A3vAxgKhe5tQOHM5BS45zzbuGp0A3zwZ3KE1t72CGiK2D7n3mf7QlrcPoWj2SW69Yzae/ep6PWVibg==}
+    hasBin: true
     dev: false
 
   /@types/eslint@8.44.8:

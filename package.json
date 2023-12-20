@@ -7,7 +7,7 @@
         "build": "next build",
         "db:push": "dotenv drizzle-kit push:mysql",
         "db:studio": "dotenv drizzle-kit studio",
-        "dev": "next dev",
+        "dev": "tunnel 2667 -- next dev --port PORT",
         "lint": "next lint",
         "start": "next start"
     },
@@ -28,6 +28,7 @@
         "@trpc/next": "^10.44.1",
         "@trpc/react-query": "^10.44.1",
         "@trpc/server": "^10.44.1",
+        "@tunnel/cli": "^0.4.5",
         "@vercel/analytics": "^1.1.1",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",

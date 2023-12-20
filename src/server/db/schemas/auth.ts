@@ -7,7 +7,7 @@
  * @todo DEPRIORITIZED: Consider renaming all schema names to be singular, which would uphold the expressiveness of the table names.
  */
 
-import { schema } from "~/server/db"
+import { flows, usersToCampaigns } from "."
 import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations, sql } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
@@ -76,11 +76,11 @@ export const usersRelations = relations(users, ({ many }) => ({
 
     //  A many relation named "flows" between the "user" and "flow" tables — meaning that one user can have many associated flows
 
-    flows: many(schema.flows),
+    flows: many(flows),
 
     //  A many relation named "usersToCampaigns" between the "user" and "user_to_campaign" tables — meaning that one user can have many associated campaigns, and one campaign can have many associated users
 
-    campaigns: many(schema.usersToCampaigns)
+    campaigns: many(usersToCampaigns)
 }))
 
 //  A table for storing account data (required by Auth.js)

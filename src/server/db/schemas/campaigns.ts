@@ -3,7 +3,7 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { schema } from "~/server/db"
+import { usersToCampaigns } from "."
 import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations } from "drizzle-orm"
 import { boolean, index, varchar } from "drizzle-orm/mysql-core"
@@ -37,5 +37,5 @@ export const campaigns = mysqlTable(
 export const campaignsRelations = relations(campaigns, ({ many }) => ({
     //  A many relation named "usersToCampaigns" between the "campaign" and "user_to_campaign" tables — meaning that one campaign can have many associated users, and one user can have many associated campaigns
 
-    users: many(schema.usersToCampaigns)
+    users: many(usersToCampaigns)
 }))

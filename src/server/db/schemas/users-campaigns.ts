@@ -3,7 +3,7 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { schema } from "~/server/db"
+import { campaigns, users } from "."
 import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations } from "drizzle-orm"
 import { boolean, index, primaryKey, timestamp, varchar } from "drizzle-orm/mysql-core"
@@ -53,9 +53,9 @@ export const usersToCampaigns = mysqlTable(
 export const usersToCampaignsRelations = relations(usersToCampaigns, ({ one }) => ({
     // A one relation named "user" between the "user_to_campaign" and "user" tables — meaning that one join is associated with one user
 
-    user: one(schema.users, { fields: [usersToCampaigns.userId], references: [schema.users.id] }),
+    user: one(users, { fields: [usersToCampaigns.userId], references: [users.id] }),
 
     // A one relation named "campaign" between the "user_to_campaign" and "campaign" tables — meaning that one join is associated with one campaign
 
-    campaign: one(schema.campaigns, { fields: [usersToCampaigns.campaignId], references: [schema.campaigns.id] })
+    campaign: one(campaigns, { fields: [usersToCampaigns.campaignId], references: [campaigns.id] })
 }))

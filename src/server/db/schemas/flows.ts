@@ -3,7 +3,7 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-import { schema } from "~/server/db"
+import { users } from "."
 import { mysqlTable } from "~/utils/multi-project-schema"
 import { relations } from "drizzle-orm"
 import { index, primaryKey, timestamp, varchar } from "drizzle-orm/mysql-core"
@@ -53,5 +53,5 @@ export const flows = mysqlTable(
 export const flowsRelations = relations(flows, ({ one }) => ({
     // A one relation named "user" between the "flow" and "user" tables — meaning that one flow is associated with one user
 
-    user: one(schema.users, { fields: [flows.userId], references: [schema.users.id] })
+    user: one(users, { fields: [flows.userId], references: [users.id] })
 }))

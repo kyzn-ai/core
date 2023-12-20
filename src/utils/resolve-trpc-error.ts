@@ -5,7 +5,7 @@
  * @todo DEPRIORITIZED: Do some reasearch into tRPC, and determine whether or not it is worth embracing the TRPC errors to some extent, instead of ignoring them entirely.
  */
 
-import { type CustomError, type CustomErrorOptions } from "."
+import { type CustomError, type CustomErrorOptions } from "~/utils"
 import { TRPCClientError } from "@trpc/client"
 import { TRPCError } from "@trpc/server"
 
