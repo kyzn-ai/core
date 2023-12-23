@@ -11,13 +11,12 @@ import { preferences } from "~/preferences"
 /**
  * @description Hardcoded env and preferences objects for React Email previews.
  *
- * @remarks comment out the imports from `~/env` and `~/preferences`, and uncomment the hardcoded `env` and `preferences` objects to use React Email previews.
+ * @remarks Comment out the imports from `~/env` and `~/preferences`, and uncomment the hardcoded `env` and `preferences` objects to use React Email previews.
  *
  * This is necessary since the React Email VSCode extenension's esbuild configuration does not recognize the `~/` alias, and has issues compiling the environment variables.
  *
  * React email is not working yet, so for now it is necessary to send a test email to see the result.
  */
-
 // const env = {
 //   BASE_URL: "https://test.com",
 // }

@@ -14,7 +14,7 @@ export const transformer = superjson
 
 //  Generate the tRPC URL, specifying the base URL for server-side requests
 
-export const trpcEndpoint = (): string => (typeof window !== "undefined" ? "" : env.NEXT_PUBLIC_BASE_URL) + "/api/trpc"
+export const trpcEndpoint = (): string => (typeof window !== "undefined" ? "" : env.BASE_URL) + "/api/trpc"
 
 /**
  * @description Helper for inferring the input types of specific tRPC routes.

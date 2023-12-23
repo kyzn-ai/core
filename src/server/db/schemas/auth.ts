@@ -9,7 +9,7 @@
 
 import { flows, usersToCampaigns } from "."
 import { mysqlTable } from "~/utils/multi-project-schema"
-import { relations, sql } from "drizzle-orm"
+import { relations } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
 import { type AdapterAccount } from "next-auth/adapters"
 import { v4 as uuid } from "uuid"
@@ -43,7 +43,7 @@ export const users = mysqlTable(
         emailVerified: timestamp("emailVerified", {
             mode: "date",
             fsp: 3
-        }).default(sql`CURRENT_TIMESTAMP(3)`),
+        }),
 
         //  A column named "image" of type varchar with a maximum length of 255 characters (required by Auth.js)
 

@@ -43,7 +43,7 @@ export const env = createEnv({
             .preprocess(value => {
                 //  If the database test strategy is set to "branch" and the app is not running in production, return the `TEST_DATABASE_URL`, otherwise return the original value
 
-                return process.env.TEST_DATABASE_STRATEGY === "branch" && process.env.NODE_ENV !== "production" ? process.env.TEST_DATABASE_URL : value
+                return process.env.TEST_DATABASE_STRATEGY === "branch" && (process.env.DATABASE_ENV ?? process.env.NODE_ENV) !== "production" ? process.env.TEST_DATABASE_URL : value
             }, z.string().url())
             .refine(
                 value => {
@@ -89,14 +89,7 @@ export const env = createEnv({
 
     //  Values exposed to the client — prefix each with `NEXT_PUBLIC_`
 
-    client: {
-        NEXT_PUBLIC_BASE_URL: z.preprocess(
-            //  Passes the original value if it exists, otherwise passes the `VERCEL_URL` if building on Vercel to ensure successful deployments, otherwise passes the localhost, then validates it as a URL
-
-            value => (value ?? !!process.env.VERCEL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${process.env.PORT ?? 3000}`),
-            z.string().url()
-        )
-    },
+    client: {},
 
     //  You can't access `process.env` as a regular object in the Next.js edge runtimes (e.g., middlewares) or client-side, so we need to destructure manually for use cases that require the original environment variable values
 
@@ -110,9 +103,7 @@ export const env = createEnv({
         TEST_DATABASE_STRATEGY: process.env.TEST_DATABASE_STRATEGY,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         RESEND_SECRET: process.env.RESEND_SECRET,
-        OPENAI_SECRET: process.env.OPENAI_SECRET,
-
-        NEXT_PUBLIC_BASE_URL: process.env.BASE_URL
+        OPENAI_SECRET: process.env.OPENAI_SECRET
     },
 
     //  Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation — this is especially useful for Docker builds
