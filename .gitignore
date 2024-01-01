@@ -1,55 +1,43 @@
-# SUM: Preventing sensitive or unwanted files from being committed to source control.
-# SEE: https://help.github.com/articles/ignoring-files/
+# @file Prevents sensitive or unwanted files from being committed to source control.
+# @author Riley Barabash <riley@rileybarabash.com>
+# @see https://help.github.com/articles/ignoring-files/
+
+# SEC: Environment
+# TIP: Committing .env files to git is bad practice and not recommended. Only commit a env.example file.
+# SEE: https://create.t3.gg/en/usage/env-variables#using-environment-variables
+
+.env
+.env*.local
+.vercel
 
 # SEC: Dependencies
 
-/node_modules
-/.pnp
+.pnp
 .pnp.js
+node_modules
+
+# SEC: Debug
+
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # SEC: Testing
 
-/coverage
-test.ts
+*.test.ts
+coverage
 
-# SEC: Database
+# SEC: Build
 
-/prisma/db.sqlite
-/prisma/db.sqlite-journal
-
-# SEC: Next.js
-
-/.next/
-/out/
+.next
+*.tsbuildinfo
+build
+dist
 next-env.d.ts
-
-# SEC: Production
-
-/build
+out
 
 # SEC: Miscellaneous
 
 .DS_Store
 *.pem
-
-# SEC: Debug
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# SEC: ENV Files
-
-# TIP: Do not commit any .env files to git except for the .env.example file.
-# SEE: https://create.t3.gg/en/usage/env-variables#using-environment-variables
-.env
-.env*.local
-
-# SEC: Vercel
-
-.vercel
-
-# SEC: Typescript
-
-*.tsbuildinfo

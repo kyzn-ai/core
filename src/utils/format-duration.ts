@@ -8,23 +8,23 @@
  *
  * - When the scope is set to `[ "past" ]`, no result is returned because the initial duration operation always returns a positive value.
  *
- * @todo DEPRIORITIZED: Write some comprehensive tests, debug, and document (properly). Implement the logic for the newly created `as: DurationCalculation` option. Remove the ESLint ignore once complete.
+ * @todo: Write some comprehensive tests, debug, and document (properly). Implement the logic for the newly created `as: DurationCalculation` option. Remove the ESLint ignore once complete.
  */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
- * @description Defines whether or not past and future durations are shown, returning zero for scopes that are not included.
+ * Defines whether or not past and future durations are shown, returning zero for scopes that are not included.
  */
 type DurationScope = "past" | "future"
 
 /**
- * @description The date components to return in the formatted duration string.
+ * The date components to return in the formatted duration string.
  */
 type DurationComponent = "years" | "months" | "days" | "hours" | "minutes" | "seconds"
 
 /**
- * @description The duration date component values.
+ * The duration date component values.
  */
 interface DurationComponents {
     years?: number
@@ -36,47 +36,47 @@ interface DurationComponents {
 }
 
 /**
- * @description The duration as the largest date component that is not zero.
+ * The duration as the largest date component that is not zero.
  */
 type AmalgamatedDurationComponentSet = "single"
 
 /**
- * @description All of the date components that are not zero in decending order, each with a value relative to its parent component.
+ * All of the date components that are not zero in decending order, each with a value relative to its parent component.
  */
 type RecommendedDurationComponentSet = "auto"
 
 /**
- * @description All of the date components in decending order, each with a value relative to its parent component.
+ * All of the date components in decending order, each with a value relative to its parent component.
  */
 type CompleteDurationComponentSet = "all"
 
 /**
- * @description A pre-configured set of date components.
+ * A pre-configured set of date components.
  */
 type DurationComponentSet = AmalgamatedDurationComponentSet | RecommendedDurationComponentSet | CompleteDurationComponentSet
 
 /**
- * @description Uses the absolute date component value in the result.
+ * Uses the absolute date component value in the result.
  */
 type AbsoluteDurationCalculationMethod = "absolute"
 
 /**
- * @description Chooses between the absolute and relative calculation methods based on the components provided.
+ * Chooses between the absolute and relative calculation methods based on the components provided.
  */
 type AutoDurationCalculationMethod = "auto"
 
 /**
- * @description Uses the component's closest parent to derive its value.
+ * Uses the component's closest parent to derive its value.
  */
 type RelativeDurationCalculationMethod = "relative"
 
 /**
- * @description A method for calculating date component values.
+ * A method for calculating date component values.
  */
 type DurationCalculationMethod = AbsoluteDurationCalculationMethod | RelativeDurationCalculationMethod | AutoDurationCalculationMethod
 
 /**
- * @description Parameters for the `formatDuration` function.
+ * Parameters for the `formatDuration` function.
  */
 interface FormatDurationOptions {
     //  The target of the duration range
@@ -101,7 +101,7 @@ interface FormatDurationOptions {
 }
 
 /**
- * @description The result of the `formatDuration` function.
+ * The result of the `formatDuration` function.
  */
 interface FormatDurationResult {
     //  The formatted duration string

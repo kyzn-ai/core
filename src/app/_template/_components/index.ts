@@ -1,5 +1,5 @@
 /**
- * @file Re-exports all colocated components for convenience.
+ * @file Re-exports all co-located components.
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 

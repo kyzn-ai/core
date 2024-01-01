@@ -2,7 +2,7 @@
  * @file A helper for unwrapping tRPC errors on the client.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Do some reasearch into tRPC, and determine whether or not it is worth embracing the TRPC errors to some extent, instead of ignoring them entirely.
+ * @todo: Do some reasearch into tRPC, and determine whether or not it is worth embracing the TRPC errors to some extent, instead of ignoring them entirely.
  */
 
 import { type CustomError, type CustomErrorOptions } from "~/utils"

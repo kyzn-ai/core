@@ -16,7 +16,7 @@ import { cookies } from "next/headers"
 import { cache } from "react"
 
 /**
- * @description Wraps the `createTRPCContext` helper and provides the required context for the tRPC API when handling a tRPC call from a React Server Component.
+ * Wraps the `createTRPCContext` helper and provides the required context for the tRPC API when handling a tRPC call from a React Server Component.
  */
 const createContext = cache(() => {
     return createTRPCContext({
@@ -28,7 +28,7 @@ const createContext = cache(() => {
 })
 
 /**
- * @description Uses a custom RSC link that lets us invoke procedures without using HTTP requests. Server Components always run on the server, so we can just call the procedure as a function.
+ * Uses a custom RSC link that lets us invoke procedures without using HTTP requests. Server Components always run on the server, so we can just call the procedure as a function.
  */
 export const api = createTRPCProxyClient<typeof appRouter>({
     //  Passes a transformer to serialize/deserialize data between the client and server

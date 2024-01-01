@@ -6,7 +6,8 @@
  *
  * JSON files don't enforce types, so we can't validate the configuration data against a schema. Creating a configuration in Typescript also allows us to create dynamic data, for when you need to fetch information or reference an existing property (e.g, using a getter).
  *
- * @todo DEPRIORITIZED: Maybe move the tagline and description to the `en` locale?
+ * @todo: Maybe move the tagline and description to the `en` locale?
+ * @todo P3 Relocate to "~/config" and/or a locale.
  */
 
 import { type AppConfig } from "~/preferences"
@@ -15,17 +16,17 @@ import { type AppConfig } from "~/preferences"
 
 const appConfig: AppConfig = {
     brand: {
-        displayName: "AMNESIA",
+        displayName: "KYZN",
         tagline: "Meet the Future You",
         description: "Communicate with an artificial personality derived from your internet presence, private thoughts, and personal preferences.",
 
         emails: {
-            noReply: "no-reply@amnesia.onambrosia.app",
-            support: "support@amnesia.onambrosia.app"
+            noReply: "no-reply@kyzn.app",
+            support: "support@kyzn.app"
         },
 
         urls: {
-            primary: "https://amnesia.onambrosia.app"
+            primary: "https://kyzn.app"
         }
     }
 } as const

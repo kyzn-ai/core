@@ -1,28 +1,34 @@
+/* @file The default Typescript configuration. */
+/* @author Riley Barabash <riley@rileybarabash.com> */
+/* */
+/* @see https://www.typescriptlang.org/tsconfig */
+
 {
     "compilerOptions": {
-        /* Base Options: */
+        /* Type Checking */
 
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "target": "es2022",
-        "allowJs": true,
-        "resolveJsonModule": true,
-        "moduleDetection": "force",
-        "isolatedModules": true,
-
-        /* Strictness */
-
-        "strict": true,
         "noUncheckedIndexedAccess": true,
-        "checkJs": true,
+        "strict": true,
 
-        /* Bundled Projects */
+        /* Modules */
 
-        "lib": ["dom", "dom.iterable", "ES2022"],
-        "noEmit": true,
         "module": "ESNext",
         "moduleResolution": "Bundler",
-        "jsx": "preserve",
+        "paths": {
+            "~/*": ["./src/*"]
+        },
+        "resolveJsonModule": true,
+
+        /* Emit */
+
+        "noEmit": true,
+
+        /* Javascript Support */
+
+        "allowJs": true,
+        "checkJs": true,
+
+        /* Editor Support */
 
         "plugins": [
             {
@@ -30,16 +36,29 @@
             }
         ],
 
+        /* Interop Constraints */
+
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "verbatimModuleSyntax": true,
+
+        /* Language and Environment */
+
+        "jsx": "preserve",
+        "lib": ["dom", "dom.iterable", "ESNext"],
+        "moduleDetection": "force",
+        "target": "ESNext",
+
+        /* Projects */
+
         "incremental": true,
 
-        /* Path Aliases */
+        /* Completeness */
 
-        "baseUrl": ".",
-
-        "paths": {
-            "~/*": ["./src/*"]
-        }
+        "skipLibCheck": true
     },
+
     "include": [".eslintrc.cjs", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.js", ".next/types/**/*.ts", "static/types/**/*.ts"],
     "exclude": ["node_modules"]
 }

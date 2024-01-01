@@ -17,14 +17,14 @@ export const transformer = superjson
 export const trpcEndpoint = (): string => (typeof window !== "undefined" ? "" : env.BASE_URL) + "/api/trpc"
 
 /**
- * @description Helper for inferring the input types of specific tRPC routes.
+ * Helper for inferring the input types of specific tRPC routes.
  *
  * @example type HelloInput = RouterInputs["example"]["hello"]
  */
 export type RouterInputs = inferRouterInputs<AppRouter>
 
 /**
- * @description Helper for inferring the output types of specific tRPC routes.
+ * Helper for inferring the output types of specific tRPC routes.
  *
  * @example type HelloOutput = RouterOutputs["example"]["hello"]
  */

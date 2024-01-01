@@ -2,9 +2,9 @@
  * @file A router for manipulating users.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Add functionality for the merging and management of duplicate users. For now, the `get` procedure just returns the first user. In the future, if a request to update or create a user fails because of a duplicate identifier, there should be a way to resolve the merge confict.
- * @todo DEPRIORITIZED: Consider updating the `flowsRouter` and flow schema to a many-to-many relationship (like `usersToCampaigns`), where "flows" are their own independent entities.
- * @todo DEPRIORITIZED: Convert all generic or tRPC errors over to a custom error class.
+ * @todo: Add functionality for the merging and management of duplicate users. For now, the `get` procedure just returns the first user. In the future, if a request to update or create a user fails because of a duplicate identifier, there should be a way to resolve the merge confict.
+ * @todo: Consider updating the `flowsRouter` and flow schema to a many-to-many relationship (like `usersToCampaigns`), where "flows" are their own independent entities.
+ * @todo: Convert all generic or tRPC errors over to a custom error class.
  */
 
 import { usersToCampaignsRouter } from "./campaigns"

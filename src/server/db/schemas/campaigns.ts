@@ -4,7 +4,7 @@
  */
 
 import { usersToCampaigns } from "."
-import { mysqlTable } from "~/utils/multi-project-schema"
+import { mysqlTable } from "~/utils"
 import { relations } from "drizzle-orm"
 import { boolean, index, varchar } from "drizzle-orm/mysql-core"
 
@@ -14,9 +14,9 @@ export const campaigns = mysqlTable(
     "campaign",
 
     {
-        //  A column named "name" of type varchar with a maximum length of 255 characters, that cannot be null
+        //  A column named "id" of type varchar with a maximum length of 255 characters, that cannot be null
 
-        id: varchar("name", { length: 255 }).notNull().primaryKey(),
+        id: varchar("id", { length: 255 }).notNull().primaryKey(),
 
         //  A column named "active" of type boolean with a default value of false, that cannot be null
 

@@ -2,13 +2,13 @@
  * @file Defines a MySQL Drizzle schema for authentication-related data (using Auth.js).
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Consolidate database column name casing and conventions. Auth.js uses camelCase for its database rows while respecting the conventional snake_case formatting for OAuth-related values. The Drizzle adapter does not yet support forced casing conventions.
- * @todo DEPRIORITIZED: Extract each table into its own file.
- * @todo DEPRIORITIZED: Consider renaming all schema names to be singular, which would uphold the expressiveness of the table names.
+ * @todo: Consolidate database column name casing and conventions. Auth.js uses camelCase for its database rows while respecting the conventional snake_case formatting for OAuth-related values. The Drizzle adapter does not yet support forced casing conventions.
+ * @todo: Extract each table into its own file.
+ * @todo: Consider renaming all schema names to be singular, which would uphold the expressiveness of the table names.
  */
 
-import { flows, usersToCampaigns } from "."
-import { mysqlTable } from "~/utils/multi-project-schema"
+import { flows, llmConfigurations, messages, threads, usersToCampaigns } from "."
+import { mysqlTable } from "~/utils"
 import { relations } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
 import { type AdapterAccount } from "next-auth/adapters"
@@ -80,7 +80,19 @@ export const usersRelations = relations(users, ({ many }) => ({
 
     //  A many relation named "usersToCampaigns" between the "user" and "user_to_campaign" tables — meaning that one user can have many associated campaigns, and one campaign can have many associated users
 
-    campaigns: many(usersToCampaigns)
+    campaigns: many(usersToCampaigns),
+
+    //  One user can have many associated LLM configurations
+
+    llmConfigurations: many(llmConfigurations),
+
+    //
+
+    threads: many(threads),
+
+    //
+
+    messages: many(messages)
 }))
 
 //  A table for storing account data (required by Auth.js)

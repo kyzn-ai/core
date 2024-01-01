@@ -6,7 +6,7 @@
 import { CustomError } from "~/utils"
 
 /**
- * @description The provided values already exist in the database where only unique values are accepted.
+ * The provided values already exist in the database where only unique values are accepted.
  */
 type DuplicateData = "DUPLICATE_DATA"
 

@@ -7,7 +7,7 @@ import { campaignsRouter, experimentalRouter, usersRouter } from "~/server/api/r
 import { createTRPCRouter } from "~/server/api/trpc"
 
 /**
- * @description This is the primary router for your server. All routers added in "~/server/api/routers" should be manually added here.
+ * This is the primary router for your server. All routers added in "~/server/api/routers" should be manually added here.
  */
 export const appRouter = createTRPCRouter({
     campaigns: campaignsRouter,

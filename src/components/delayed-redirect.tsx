@@ -2,7 +2,7 @@
  * @file Redirects after the elapse of an artificial delay and provides a button to force redirect.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Add support for arbitrary durations.
+ * @todo: Add support for arbitrary durations.
  */
 
 "use client"

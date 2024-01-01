@@ -4,7 +4,7 @@
  */
 
 import { users } from "."
-import { mysqlTable } from "~/utils/multi-project-schema"
+import { mysqlTable } from "~/utils"
 import { relations } from "drizzle-orm"
 import { index, primaryKey, timestamp, varchar } from "drizzle-orm/mysql-core"
 
@@ -14,9 +14,9 @@ export const flows = mysqlTable(
     "flow",
 
     {
-        //  A column named "name" of type varchar with a maximum length of 255 characters, that cannot be null
+        //  A column named "id" of type varchar with a maximum length of 255 characters, that cannot be null
 
-        id: varchar("name", { length: 255 }).notNull(),
+        id: varchar("id", { length: 255 }).notNull(),
 
         //  A column named "user_id" of type varchar with a maximum length of 255 characters, that cannot be null
 

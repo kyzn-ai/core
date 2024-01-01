@@ -40,12 +40,12 @@ export default async function Root(): Promise<JSX.Element> {
                             <CardContent className="flex w-full flex-col items-center justify-center gap-8 px-8 py-8">
                                 {/* Logo image */}
 
-                                <SVG.Logo width={256} />
+                                <SVG.Logo width={192} />
 
                                 {/* Get started button */}
 
                                 <Button asChild={true} variant={"outline"}>
-                                    <Link className="font-mono font-[700]" href={!!session ? "/dashboard" : "/signin"}>
+                                    <Link className="font-mono" href={!!session ? "/dashboard" : "/signin"}>
                                         Get started
                                     </Link>
                                 </Button>

@@ -4,7 +4,7 @@
  */
 
 import { env } from "~/env"
-import { preferences } from "~/preferences"
+import { createTableName } from "~/utils"
 import { type Config } from "drizzle-kit"
 
 export default {
@@ -20,9 +20,5 @@ export default {
 
     //  A glob pattern that selects the tables to push and introspect
 
-    tablesFilter: `${preferences.brand.displayName.toLowerCase()}_${
-        //  If the Multi-Project Schema test strategy is selected and the app is not running in prod, postfix the database table prefix with "test_"
-
-        env.TEST_DATABASE_STRATEGY === "mps" && (env.DATABASE_ENV ?? env.NODE_ENV) !== "production" ? "test_" : ""
-    }*`
+    tablesFilter: createTableName() + "*"
 } satisfies Config

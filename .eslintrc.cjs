@@ -2,8 +2,8 @@
  * @file Configures ESLint.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Re-enable `explicit-function-return-type` and fix warnings.
- * @todo DEPRIORITIZED: Go through all eslint rules and configure them.
+ * @todo: Re-enable `explicit-function-return-type` and fix warnings.
+ * @todo: Go through all eslint rules and configure them.
  *
  * @type { import ( "eslint" ) .Linter.Config }
  */
@@ -39,7 +39,6 @@ const config = {
 
         "@typescript-eslint/no-misused-promises": ["error", { checksVoidReturn: { attributes: false } }],
 
-        "lines-around-comment": ["warn", { beforeBlockComment: true }],
         "comma-dangle": ["warn", "never"],
         quotes: ["warn", "double", { avoidEscape: true }],
         indent: ["warn", 4, { SwitchCase: 1 }],
@@ -50,6 +49,7 @@ const config = {
         // "array-bracket-spacing": ["warn", "always"],
         // "space-in-parens": ["warn", "always"],
         // "space-before-function-paren": ["warn", "always"]
+        // "lines-around-comment": ["warn", { beforeBlockComment: true }],
     }
 }
 

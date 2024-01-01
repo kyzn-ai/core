@@ -9,10 +9,8 @@ import { createTRPCContext } from "~/server/api/trpc"
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
 import { type NextRequest } from "next/server"
 
-
-
 /**
- * @description Wraps the `createTRPCContext` helper and provides the required context for the tRPC API when handling a tRPC request via HTTP (e.g, when you make requests from Client Components)
+ * Wraps the `createTRPCContext` helper and provides the required context for the tRPC API when handling a tRPC request via HTTP (e.g, when you make requests from Client Components)
  */
 /* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */
 const createContext = async (req: NextRequest) => {

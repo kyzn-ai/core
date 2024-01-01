@@ -2,7 +2,7 @@
  * @file Checks if the inputs provided are unique, ignoring the subject user if an ID is provided.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Implement an error system that specifies the exact input that is a duplicate.
+ * @todo: Implement an error system that specifies the exact input that is a duplicate.
  */
 
 import { type Drizzle, schema } from "~/server/db"

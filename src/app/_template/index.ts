@@ -1,5 +1,5 @@
 /**
- * @file Re-exports all colocated files for convenience.
+ * @file Re-exports all co-located directories.
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 

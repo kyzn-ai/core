@@ -2,7 +2,7 @@
  * @file Gets the current search params, appends a param, and returns the new search params as a string.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
- * @todo DEPRIORITIZED: Allow multiple key/value pairs to be appended at once.
+ * @todo: Allow multiple key/value pairs to be appended at once.
  */
 
 import { type ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
