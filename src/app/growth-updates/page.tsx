@@ -16,7 +16,7 @@ export default function GrowthUpdates(): JSX.Element {
                 <section className="flex h-screen w-full flex-col items-center justify-center">
                     {/* Redirect modal */}
 
-                    <DelayedRedirect title="Growth Updates" description="Thanks for checking out AMNESIA! You will be redirected to your SMS app in 5 seconds." buttonText="Time travel" redirectUrl="sms:+18722663742?body=AI" />
+                    <DelayedRedirect title="Growth Updates" description="Thanks for checking out KYZN! You will be redirected to your SMS app in 5 seconds." buttonText="Time travel" redirectUrl="sms:+18722663742?body=AI" />
                 </section>
             </main>
         </>

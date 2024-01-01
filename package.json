@@ -1,5 +1,5 @@
 {
-    "name": "amnesia",
+    "name": "kyzn-core",
     "version": "0.1.0",
     "private": true,
     "type": "module",
@@ -7,7 +7,7 @@
         "build": "next build",
         "db:push": "dotenv drizzle-kit push:mysql",
         "db:studio": "dotenv drizzle-kit studio",
-        "dev": "tunnel 2667 -- next dev --port PORT",
+        "dev": "tunnel 5996 -- next dev --port PORT",
         "lint": "next lint",
         "start": "next start"
     },

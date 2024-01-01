@@ -74,6 +74,7 @@ export const env = createEnv({
         ),
 
         DATABASE_ENV: z.enum(["production", "development", "test"]).optional(),
+        DATABASE_TABLE_PREFIX: z.string().optional(),
 
         //  Defaults to "mps" if not set
 
@@ -100,6 +101,7 @@ export const env = createEnv({
         DATABASE_URL: process.env.DATABASE_URL,
         TEST_DATABASE_URL: process.env.TEST_DATABASE_URL,
         DATABASE_ENV: process.env.DATABASE_ENV,
+        DATABASE_TABLE_PREFIX: process.env.DATABASE_TABLE_PREFIX,
         TEST_DATABASE_STRATEGY: process.env.TEST_DATABASE_STRATEGY,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         RESEND_SECRET: process.env.RESEND_SECRET,

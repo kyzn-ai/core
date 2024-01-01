@@ -15,17 +15,17 @@ import { type AppConfig } from "~/preferences"
 
 const appConfig: AppConfig = {
     brand: {
-        displayName: "AMNESIA",
+        displayName: "KYZN",
         tagline: "Meet the Future You",
         description: "Communicate with an artificial personality derived from your internet presence, private thoughts, and personal preferences.",
 
         emails: {
-            noReply: "no-reply@amnesia.onambrosia.app",
-            support: "support@amnesia.onambrosia.app"
+            noReply: "no-reply@kyzn.app",
+            support: "support@kyzn.app"
         },
 
         urls: {
-            primary: "https://amnesia.onambrosia.app"
+            primary: "https://kyzn.app"
         }
     }
 } as const

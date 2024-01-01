@@ -4,7 +4,7 @@
  */
 
 import { usersToCampaigns } from "."
-import { mysqlTable } from "~/utils/multi-project-schema"
+import { mysqlTable } from "~/utils"
 import { relations } from "drizzle-orm"
 import { boolean, index, varchar } from "drizzle-orm/mysql-core"
 

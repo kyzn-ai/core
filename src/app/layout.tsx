@@ -32,7 +32,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata = {
     title: `${preferences.brand.displayName} | ${preferences.brand.tagline}`,
     description: preferences.brand.description,
-    icons: [{ rel: "icon", url: "/favicon.png" }]
+    icons: [{ rel: "icon", url: "/favicon-brandmark-inv-offb-rounded.png" }]
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {

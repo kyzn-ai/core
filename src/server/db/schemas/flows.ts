@@ -4,7 +4,7 @@
  */
 
 import { users } from "."
-import { mysqlTable } from "~/utils/multi-project-schema"
+import { mysqlTable } from "~/utils"
 import { relations } from "drizzle-orm"
 import { index, primaryKey, timestamp, varchar } from "drizzle-orm/mysql-core"
 

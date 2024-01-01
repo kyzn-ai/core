@@ -8,7 +8,7 @@
  */
 
 import { flows, usersToCampaigns } from "."
-import { mysqlTable } from "~/utils/multi-project-schema"
+import { mysqlTable } from "~/utils"
 import { relations } from "drizzle-orm"
 import { index, int, primaryKey, text, timestamp, varchar } from "drizzle-orm/mysql-core"
 import { type AdapterAccount } from "next-auth/adapters"

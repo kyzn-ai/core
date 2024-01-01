@@ -1,5 +1,5 @@
 /**
- * @file Opts the user in to recieve growth updates for AMNESIA.
+ * @file Opts the user in to recieve growth updates for KYZN.
  * @author Riley Barabash <riley@rileybarabash.com>
  *
  * @todo DEPRIORITIZED: Move the campaign status check to the `responseCoordinator`, and create the campaigns somewhere else such as the admin dashboard.
