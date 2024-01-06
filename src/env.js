@@ -80,12 +80,22 @@ export const env = createEnv({
 
         TEST_DATABASE_STRATEGY: z.enum(["mps", "branch"]).default("mps"),
 
+        INTERNAL_SECRET: z.string(),
+
         //  Requires a value in production
 
         NEXTAUTH_SECRET: process.env.NODE_ENV === "production" ? z.string() : z.string().optional(),
 
         RESEND_SECRET: z.string(),
-        OPENAI_SECRET: z.string()
+
+        OPENAI_SECRET: z.string(),
+        OPENAI_ORGANIZATION: z.string(),
+        OPENAI_ASSISTANT: z.string(),
+
+        TWILIO_SID: z.string(),
+        TWILIO_SECRET: z.string(),
+        TWILIO_NUMBER: z.string(),
+        TWILIO_TEST_NUMBER: z.string()
     },
 
     //  Values exposed to the client — prefix each with `NEXT_PUBLIC_`
@@ -98,14 +108,27 @@ export const env = createEnv({
         NODE_ENV: process.env.NODE_ENV,
         BASE_URL: process.env.BASE_URL,
         DEV_BASE_URL: process.env.DEV_BASE_URL,
+
         DATABASE_URL: process.env.DATABASE_URL,
         TEST_DATABASE_URL: process.env.TEST_DATABASE_URL,
         DATABASE_ENV: process.env.DATABASE_ENV,
         DATABASE_TABLE_PREFIX: process.env.DATABASE_TABLE_PREFIX,
         TEST_DATABASE_STRATEGY: process.env.TEST_DATABASE_STRATEGY,
+
+        INTERNAL_SECRET: process.env.INTERNAL_SECRET,
+
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+
         RESEND_SECRET: process.env.RESEND_SECRET,
-        OPENAI_SECRET: process.env.OPENAI_SECRET
+
+        OPENAI_SECRET: process.env.OPENAI_SECRET,
+        OPENAI_ORGANIZATION: process.env.OPENAI_ORGANIZATION,
+        OPENAI_ASSISTANT: process.env.OPENAI_ASSISTANT,
+
+        TWILIO_SID: process.env.TWILIO_SID,
+        TWILIO_SECRET: process.env.TWILIO_SECRET,
+        TWILIO_NUMBER: process.env.TWILIO_NUMBER,
+        TWILIO_TEST_NUMBER: process.env.TWILIO_TEST_NUMBER
     },
 
     //  Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation — this is especially useful for Docker builds

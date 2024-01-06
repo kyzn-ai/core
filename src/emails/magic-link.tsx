@@ -9,7 +9,7 @@ import { env } from "~/env"
 import { preferences } from "~/preferences"
 
 /**
- * @description Hardcoded env and preferences objects for React Email previews.
+ * Hardcoded env and preferences objects for React Email previews.
  *
  * @remarks Comment out the imports from `~/env` and `~/preferences`, and uncomment the hardcoded `env` and `preferences` objects to use React Email previews.
  *

@@ -9,10 +9,12 @@
         "db:studio": "dotenv drizzle-kit studio",
         "dev": "tunnel 5996 -- next dev --port PORT",
         "lint": "next lint",
-        "start": "next start"
+        "start": "next start",
+        "use": "tsx ./src/scripts/index.ts"
     },
     "dependencies": {
         "@auth/drizzle-adapter": "^0.3.9",
+        "@defer/client": "^1.14.1",
         "@planetscale/database": "^1.11.0",
         "@radix-ui/react-alert-dialog": "^1.0.5",
         "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -29,7 +31,9 @@
         "@trpc/react-query": "^10.44.1",
         "@trpc/server": "^10.44.1",
         "@tunnel/cli": "^0.4.5",
+        "@upstash/qstash": "^2.3.0",
         "@vercel/analytics": "^1.1.1",
+        "ai": "^2.2.29",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
         "drizzle-orm": "^0.29.1",
@@ -69,6 +73,7 @@
         "prettier": "^3.1.0",
         "prettier-plugin-tailwindcss": "^0.5.9",
         "tailwindcss": "^3.3.6",
+        "tsx": "^4.7.0",
         "typescript": "^5.3.2"
     },
     "ct3aMetadata": {

@@ -13,6 +13,10 @@ export * from "./format-duration"
 export * from "./multi-project-schema"
 export * from "./resolve-trpc-error"
 export * from "./to-title-case"
+export * from "./to-kebab-case"
+export * from "./unix-to-mysql-timestamp"
+export * from "./validate-request"
+export * from "./with-callback"
 
 //  You, sir, are very frustrating (investigate)
 

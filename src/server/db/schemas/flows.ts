@@ -14,9 +14,9 @@ export const flows = mysqlTable(
     "flow",
 
     {
-        //  A column named "name" of type varchar with a maximum length of 255 characters, that cannot be null
+        //  A column named "id" of type varchar with a maximum length of 255 characters, that cannot be null
 
-        id: varchar("name", { length: 255 }).notNull(),
+        id: varchar("id", { length: 255 }).notNull(),
 
         //  A column named "user_id" of type varchar with a maximum length of 255 characters, that cannot be null
 

@@ -15,7 +15,7 @@ import superjson from "superjson"
 import { ZodError } from "zod"
 
 /**
- * @description Defines and generates the "internals" for the context that is available to all tRPC procedures, allowing you to access common properties when processing a request, like a database or the session.
+ * Defines and generates the "internals" for the context that is available to all tRPC procedures, allowing you to access common properties when processing a request, like a database or the session.
  *
  * @see https://trpc.io/docs/server/context
  */
@@ -32,7 +32,7 @@ export const createTRPCContext = async (options: { headers: Headers }) => {
 }
 
 /**
- * @description Initializes the tRPC API, implementing the context and transformer. We also parse Zod errors to provide typesafety on the frontend if your procedure fails due to validation errors on the backend.
+ * Initializes the tRPC API, implementing the context and transformer. We also parse Zod errors to provide typesafety on the frontend if your procedure fails due to validation errors on the backend.
  */
 const t = initTRPC.context<typeof createTRPCContext>().create({
     //  Used to serialize and deserialize data when sending and receiving it over the network
@@ -63,19 +63,19 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 })
 
 /**
- * @description Used to create new routers and sub-routers when buiding your tRPC API. You will need to import this frequently in the "~/server/api/routers" directory.
+ * Used to create new routers and sub-routers when buiding your tRPC API. You will need to import this frequently in the "~/server/api/routers" directory.
  *
  * @see https://trpc.io/docs/router
  */
 export const createTRPCRouter = t.router
 
 /**
- * @description The public (unauthenticated) procedure. This is the base piece you use to build new queries and mutations on for API. It does not guarantee that a user querying is authorized, but you can still access the user's session data if they are logged in.
+ * The public (unauthenticated) procedure. This is the base piece you use to build new queries and mutations on for API. It does not guarantee that a user querying is authorized, but you can still access the user's session data if they are logged in.
  */
 export const publicProcedure = t.procedure
 
 /**
- * @description A middleware that enforces users are logged in before running the procedure.
+ * A middleware that enforces users are logged in before running the procedure.
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
     if (!ctx.session || !ctx.session.user) {
@@ -96,7 +96,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 })
 
 /**
- * @description The protected (authenticated) procedure. If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies that the session is valid and guarantees `ctx.session.user` is not null.
+ * The protected (authenticated) procedure. If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies that the session is valid and guarantees `ctx.session.user` is not null.
  *
  * @see https://trpc.io/docs/procedures
  */
