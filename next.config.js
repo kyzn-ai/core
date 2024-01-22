@@ -16,29 +16,41 @@ const config = {
          * Required to use defer.run.
          */
         serverMinification: false
-    }
+    },
 
-    // async rewrites() {
-    //     return {
-    //         beforeFiles: [
-    //             // if the host is `app.acme.com`,
-    //             // this rewrite will be applied
-    //             // https://github.com/vercel/next.js/discussions/32294#discussioncomment-5472857
-    //             {
-    //                 source: "/:path*",
-    //                 has: [
-    //                     {
-    //                         type: "host",
-    //                         value: "get.kyzn.app"
-    //                     }
-    //                 ],
-    //                 destination: "/app/:path*"
-    //             }
-    //         ],
-    //         afterFiles: [],
-    //         fallback: []
-    //     }
-    // }
+    assetPrefix: "https://kyzn.app",
+
+    async rewrites() {
+        return {
+            beforeFiles: [
+                // Existing rule for try.kyzn.app
+                {
+                    source: "/:path*",
+                    has: [
+                        {
+                            type: "host",
+                            value: "try.kyzn.app"
+                        }
+                    ],
+                    destination: "/subdomains/try/:path*"
+                },
+                // Additional rule to block access from kyzn.app to any /subdomains path
+                {
+                    source: "/subdomains/:path*",
+
+                    has: [
+                        {
+                            type: "host",
+                            value: "kyzn.app"
+                        }
+                    ],
+                    destination: "/404"
+                }
+            ],
+            afterFiles: [],
+            fallback: []
+        }
+    }
 }
 
 export default config
