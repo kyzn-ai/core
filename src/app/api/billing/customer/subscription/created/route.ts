@@ -53,7 +53,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
             // Send success message to number
 
-            await sendMessage({ content: "Congratulations! You have successfully subscribed to KYZN. Welcome to your next chapter. \n\nTo manage your subscription, use the '@billing' command. \n\nIf you need help with something, try asking KYZN — otherwise use '@help' followed by your message and a real person will get in touch with you.", to: customer.phone })
+            await sendMessage({ content: "Congratulations! You have successfully subscribed to KYZN. Welcome to your next chapter.", to: customer.phone })
 
             break
         // ... handle other event types

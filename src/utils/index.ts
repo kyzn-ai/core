@@ -17,6 +17,8 @@ export * from "./to-kebab-case"
 export * from "./unix-to-mysql-timestamp"
 export * from "./validate-request"
 export * from "./with-callback"
+export * from "./escape-string"
+export * from "./encode-multiline-string"
 
 //  You, sir, are very frustrating (investigate)
 

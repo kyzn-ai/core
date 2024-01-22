@@ -4,10 +4,10 @@ import { sendMessage, type DecodeParamsResult } from "~/lib/sms"
 import { constants } from "~/constants"
 import { createCheckoutLink, createCustomerIfNull, generateCustomerPortalLink, hasSubscription } from "../billing/stripe/helpers"
 import { db, schema } from "~/server/db"
-import { and, count, eq, sql } from "drizzle-orm"
+import { and, count, eq } from "drizzle-orm"
 import { resend } from "../email"
-import { createSenderIdentity } from "~/utils"
-import { preferences } from "~/preferences"
+import { createSenderIdentity, encodeMultilineString } from "~/utils"
+// import { preferences } from "~/preferences"
 
 //  Manages the use of response flows
 
@@ -31,29 +31,50 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
 
     const formattedContent: string = content.toLowerCase().trim()
 
-    if (formattedContent.startsWith("@help ")) {
+    if (formattedContent.startsWith("@help")) {
+        //  Return a message with all possible cmds
+
+        return encodeMultilineString(
+            `You can talk to KYZN using natural language, or use one of the following system commands:
+
+            @about: You can find out more about KYZN here.
+            @billing: View and modify your subscription details.
+            @contact: Retrieve the contact card for KYZN.
+            @help: Get information on how to use KYZN.
+            @invite <CODE>: Get access to KYZN with an invite code.
+            @support <MESSAGE>: Send a support request to our team.`
+        )
+    }
+
+    if (formattedContent.startsWith("@about")) {
+        //  Return a message with all possible cmds
+
+        return `Here's more info on KYZN: ${"https://kyznai.notion.site/Welcome-609c87a56a9342bf941c504953f4874e?pvs=4"}`
+    }
+
+    if (formattedContent.startsWith("@support ")) {
         //  Extract code
 
-        const message: string = content.substring("@help ".length)
+        const message: string = content.substring("@support ".length)
 
         try {
             //  Send the verification email
 
             const response = await resend.emails.send({
-                from: createSenderIdentity({ name: "User", email: "user@kyzn.app" }),
+                from: createSenderIdentity({ name: sender, email: "user@kyzn.app" }),
                 to: "riley@rileybarabash.com",
-                subject: `'@help' request from ${sender}`,
+                subject: "Support Request (SMS)",
                 text: message
             })
 
             if (response.error) {
-                throw new Error(`Failed to send verification email to ${sender}`, { cause: response.error })
+                throw new Error(`Failed to send support email to ${sender}`, { cause: response.error })
             }
         } catch (error) {
             console.error(error)
         }
 
-        return "Support request recieved! You should receive a response within 24 hours."
+        return "Support request received! You should get a response within 24 hours."
     }
 
     if (formattedContent.startsWith("@contact")) {
@@ -73,7 +94,7 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
 
         const portalUrl: string | undefined = await generateCustomerPortalLink(customerId!)
 
-        if (!portalUrl) return "You don't have any active subscriptions."
+        if (!portalUrl) return "You don't have an active subscription."
 
         return `Manage your subscription here: ${portalUrl}`
     }
@@ -111,7 +132,7 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
         //  If it does exist, create them as a customer, generate the stripe link
     }
 
-    console.log(aiResponseCount)
+    // console.log(aiResponseCount)
 
     //  if new AI user, respond with welcome message
 
@@ -121,11 +142,22 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
 
     if (isSubscribed || aiResponseCount < 10) {
         if (!isSubscribed && !aiResponseCount) {
-            await sendMessage({ content: "Hello! You have 10 free messages to test the power of KYZN. Your journey starts now.", to: sender })
+            await sendMessage({
+                content: encodeMultilineString(`Hello! You have 10 free messages to test the power of KYZN. Your journey starts now.
+            
+            To learn more, use the '@help' command.`),
+                to: sender
+            })
         }
         return await temp({ userId, content, number: sender })
     }
 
-    return "You don't have an active KYZN subscription. \n\nMessage '@rileybarabash' on Instagram for an invite code, then use \"@invite <YOUR_CODE>\" to generate a payment link. \n\nOnce subscribed, you will immediately recieve full access to KYZN."
+    return encodeMultilineString(
+        `You don't have an active KYZN subscription.
+
+        If you have an invite code, use '@invite <CODE>' to generate a payment link. Once subscribed, you will immediately receive full access to KYZN.
+        
+        If you would like access to KYZN, please submit an invite request with '@support <MESSAGE>' and someone will be in touch with you.`
+    )
     // return await optIn.growthUpdates({ userId, content })
 }
