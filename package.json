@@ -64,6 +64,7 @@
         "resend": "^2.0.0",
         "server-only": "^0.0.1",
         "sharp": "^0.33.0",
+        "stripe": "^14.13.0",
         "superjson": "^2.2.1",
         "tailwind-merge": "^2.1.0",
         "tailwindcss-animate": "^1.0.7",

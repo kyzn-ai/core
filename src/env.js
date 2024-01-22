@@ -96,12 +96,21 @@ export const env = createEnv({
         TWILIO_SID: z.string(),
         TWILIO_SECRET: z.string(),
         TWILIO_NUMBER: z.string(),
-        TWILIO_TEST_NUMBER: z.string()
+        TWILIO_TEST_NUMBER: z.string(),
+
+        STRIPE_SK: z.string(),
+        STRIPE_TEST_SK: z.string(),
+
+        STRIPE_WEBHOOK_SK: z.string(),
+        STRIPE_TEST_WEBHOOK_SK: z.string()
     },
 
     //  Values exposed to the client — prefix each with `NEXT_PUBLIC_`
 
-    client: {},
+    client: {
+        NEXT_PUBLIC_STRIPE_PK: z.string(),
+        NEXT_PUBLIC_STRIPE_TEST_PK: z.string()
+    },
 
     //  You can't access `process.env` as a regular object in the Next.js edge runtimes (e.g., middlewares) or client-side, so we need to destructure manually for use cases that require the original environment variable values
 
@@ -129,7 +138,15 @@ export const env = createEnv({
         TWILIO_SID: process.env.TWILIO_SID,
         TWILIO_SECRET: process.env.TWILIO_SECRET,
         TWILIO_NUMBER: process.env.TWILIO_NUMBER,
-        TWILIO_TEST_NUMBER: process.env.TWILIO_TEST_NUMBER
+        TWILIO_TEST_NUMBER: process.env.TWILIO_TEST_NUMBER,
+
+        STRIPE_SK: process.env.STRIPE_SK,
+        STRIPE_TEST_SK: process.env.STRIPE_TEST_SK,
+        NEXT_PUBLIC_STRIPE_PK: process.env.NEXT_PUBLIC_STRIPE_PK,
+        NEXT_PUBLIC_STRIPE_TEST_PK: process.env.NEXT_PUBLIC_STRIPE_TEST_PK,
+
+        STRIPE_WEBHOOK_SK: process.env.STRIPE_WEBHOOK_SK,
+        STRIPE_TEST_WEBHOOK_SK: process.env.STRIPE_TEST_WEBHOOK_SK
     },
 
     //  Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation — this is especially useful for Docker builds

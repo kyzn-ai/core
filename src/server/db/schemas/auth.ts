@@ -26,6 +26,10 @@ export const users = mysqlTable(
 
         id: varchar("id", { length: 255 }).notNull().$defaultFn(uuid).primaryKey(),
 
+        //  
+
+        stripeId: varchar("stripe_id", { length: 255 }),
+
         //  A column named "name" of type varchar with a maximum length of 255 characters (required by Auth.js)
 
         name: varchar("name", { length: 255 }),
