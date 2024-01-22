@@ -18,15 +18,21 @@ export interface SendMessageOptions {
 
     //  The recipient's phone number, or a group of numbers in E.164 format
 
-    to: string | [string]
+    to: string | string[]
+
+    /**
+     * The URL of the media to attach to the message.
+     */
+    mediaUrl?: string | string[]
 }
 
 //  Returns the Twilio MessageInstance's SID, throwing an error if unsuccessful
 
-export async function sendMessage({ content, from: sender = env.NODE_ENV === "production" ? env.TWILIO_NUMBER : env.TWILIO_TEST_NUMBER, to: recipients }: SendMessageOptions): Promise<string[]> {
+export async function sendMessage({ content, from: sender = env.NODE_ENV === "production" ? env.TWILIO_NUMBER : env.TWILIO_TEST_NUMBER, to: recipients, mediaUrl }: SendMessageOptions): Promise<string[]> {
     //  If the recipients input is a string, convert it to an array
 
     if (typeof recipients === "string") recipients = [recipients]
+    if (typeof mediaUrl === "string") mediaUrl = [mediaUrl]
 
     try {
         //  Map over the recipients and send each one individually
@@ -36,7 +42,8 @@ export async function sendMessage({ content, from: sender = env.NODE_ENV === "pr
                 const message = await twilio.messages.create({
                     from: sender,
                     to: recipient,
-                    body: content
+                    body: content,
+                    mediaUrl: mediaUrl as string[]
                 })
                 return message.sid
             })

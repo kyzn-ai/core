@@ -148,6 +148,9 @@ devDependencies:
   '@types/uuid':
     specifier: ^9.0.7
     version: 9.0.7
+  '@types/vcards-js':
+    specifier: ^2.10.5
+    version: 2.10.5
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.13.2
     version: 6.13.2(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)(typescript@5.3.2)
@@ -190,6 +193,9 @@ devDependencies:
   typescript:
     specifier: ^5.3.2
     version: 5.3.2
+  vcards-js:
+    specifier: ^2.10.0
+    version: 2.10.0
 
 packages:
 
@@ -2485,6 +2491,10 @@ packages:
 
   /@types/uuid@9.0.7:
     resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
+    dev: true
+
+  /@types/vcards-js@2.10.5:
+    resolution: {integrity: sha512-QkKYoDc7HcRwiJVALv3ZSl1pzX3nkGm8OiQWZVn4QM8S4xUkcZVU6ci89eF6ychyEQc3ySLDIyAa/Mymbvg3IA==}
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.13.2(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)(typescript@5.3.2):
@@ -6351,6 +6361,10 @@ packages:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
     dev: false
+
+  /vcards-js@2.10.0:
+    resolution: {integrity: sha512-nah+xbVInVJaO6+C5PEUqaougmv8BN8aa7ZCtmVQcX6eWIZGRukckFtseXSI7KD7/nXtwkJe624y42T0r+L+AQ==}
+    dev: true
 
   /vue@3.3.13(typescript@5.3.2):
     resolution: {integrity: sha512-LDnUpQvDgsfc0u/YgtAgTMXJlJQqjkxW1PVcOnJA5cshPleULDjHi7U45pl2VJYazSSvLH8UKcid/kzH8I0a0Q==}

@@ -56,6 +56,14 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
         return "Support request recieved! You should receive a response within 24 hours."
     }
 
+    if (formattedContent.startsWith("@contact")) {
+        //  Send the vcard
+
+        await sendMessage({ content: "Here is the contact card for KYZN:", to: sender, mediaUrl: "https://kyzn.app/vcards/kyzn.vcf" })
+
+        return null
+    }
+
     if (formattedContent.startsWith("@billing")) {
         //  Extract code
 
