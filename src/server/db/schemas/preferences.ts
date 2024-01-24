@@ -59,19 +59,19 @@ const newValue: Value = value
 
 I also want to get all cases of the schema (similar to export const preferenceKeys = ["defaults-standalone-model-id", "color-theme"] as const) (a read only array of strings) and the type of all of the keys (similar to: export type PreferenceKey = typeof preferenceKeys) so that I can use it for inference on the database column. This could be done with a `parsePreferenceSchema` func or something similar, or maybe just the `parsePreference` func but I only pass in the schema.
 
-So in conclusion, the main purpose is to convert the camelCase sequence of object/interface keys to kebab/skewer case, validate the type of the balue going in against the schema, and type the value when parsing it out of the db.
+So in conclusion, the main purpose is to convert the camelCase sequence of object/interface keys to kebab/skewer case, validate the type of the value going in against the schema, and type the value when parsing it out of the db.
 
 */
 
 /**
  * @description All of the possible user preference keys.
  */
-export const preferenceKeys = ["defaults-standalone-model-id", "color-theme"] as const
+export const preferenceKeys = ["defaults-standalone-model-id", "color-theme", "disable-personality"] as const
 
 /**
  * @description The ID of the preference.
  */
-export type PreferenceKey = typeof preferenceKeys
+export type PreferenceKey = (typeof preferenceKeys)[number]
 
 /**
  * @description Additional information about the preference.
@@ -128,7 +128,7 @@ export const preferences = mysqlTable(
 )
 
 /**
- * @description The relations for the "preferenc" table.
+ * @description The relations for the "preference" table.
  */
 export const preferencesRelations = relations(preferences, ({ one }) => ({
     /**

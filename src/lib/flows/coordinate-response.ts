@@ -6,7 +6,7 @@ import { createCheckoutLink, createCustomerIfNull, generateCustomerPortalLink, h
 import { db, schema } from "~/server/db"
 import { and, count, eq } from "drizzle-orm"
 import { resend } from "../email"
-import { createSenderIdentity, encodeMultilineString } from "~/utils"
+import { createSenderIdentity, encodeMultilineString, parseBooleanFromString } from "~/utils"
 // import { preferences } from "~/preferences"
 
 //  Manages the use of response flows
@@ -42,7 +42,8 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
             @contact: Retrieve the contact card for KYZN.
             @help: Get information on how to use KYZN.
             @invite <CODE>: Get access to KYZN with an invite code.
-            @support <MESSAGE>: Send a support request to our team.`
+            @support <MESSAGE>: Send a support request to our team.
+            @toggle-personality: Disable or re-enable KYZN's personality.`
         )
     }
 
@@ -97,6 +98,35 @@ export const coordinateResponse = async ({ Body: content, From: sender, ..._ }: 
         if (!portalUrl) return "You don't have an active subscription."
 
         return `Manage your subscription here: ${portalUrl}`
+    }
+
+    if (formattedContent.startsWith("@toggle-personality")) {
+        //  Get the value from the db
+
+        const personalityDisabledRaw: string | null | undefined = (await db.query.preferences.findFirst({ where: and(eq(schema.preferences.userId, userId), eq(schema.preferences.key, "disable-personality")) }))?.value
+
+        if (!personalityDisabledRaw) {
+            await db.insert(schema.preferences).values({
+                userId,
+                key: "disable-personality",
+                value: "true"
+            })
+        } else {
+            await db
+                .update(schema.preferences)
+                .set({ value: String(!parseBooleanFromString(personalityDisabledRaw)) })
+                .where(eq(schema.preferences.userId, userId))
+        }
+
+        //  Get the new value from the db
+
+        const personalityDisabled: boolean = parseBooleanFromString((await db.query.preferences.findFirst({ where: and(eq(schema.preferences.userId, userId), eq(schema.preferences.key, "disable-personality")) }))?.value)!
+
+        // const personalityDisabled: boolean = await
+
+        if (personalityDisabled) return "KYZN's personality has been disabled. You can re-enable it at any time with the '@toggle-personality' command."
+
+        return "KYZN's personality has been re-enabled. You can disable it at any time with the '@toggle-personality' command."
     }
 
     if (formattedContent.startsWith("@invite ")) {

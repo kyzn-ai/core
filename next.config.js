@@ -3,7 +3,7 @@
  * @author Riley Barabash <riley@rileybarabash.com>
  */
 
-await import("./src/env.js")
+const { env } = await import("./src/env.js")
 
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful for Docker builds.
@@ -18,7 +18,7 @@ const config = {
         serverMinification: false
     },
 
-    assetPrefix: "https://kyzn.app",
+    assetPrefix: (env.NODE_ENV ?? env.ENV) === "production" ? "https://kyzn.app" : undefined,
 
     async rewrites() {
         return {
@@ -32,20 +32,20 @@ const config = {
                             value: "try.kyzn.app"
                         }
                     ],
-                    destination: "/subdomains/try/:path*"
-                },
-                // Additional rule to block access from kyzn.app to any /subdomains path
-                {
-                    source: "/subdomains/:path*",
-
-                    has: [
-                        {
-                            type: "host",
-                            value: "kyzn.app"
-                        }
-                    ],
-                    destination: "/404"
+                    destination: "/try/:path*"
                 }
+                // Additional rule to block access from kyzn.app to any /subdomains path
+                // {
+                //     source: "/try/:path*",
+
+                //     has: [
+                //         {
+                //             type: "host",
+                //             value: "kyzn.app"
+                //         }
+                //     ],
+                //     destination: "/404"
+                // }
             ],
             afterFiles: [],
             fallback: []

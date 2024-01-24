@@ -19,6 +19,7 @@ export * from "./validate-request"
 export * from "./with-callback"
 export * from "./escape-string"
 export * from "./encode-multiline-string"
+export * from "./parse-boolean-from-string"
 
 //  You, sir, are very frustrating (investigate)
 

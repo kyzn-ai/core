@@ -19,7 +19,7 @@
         "build": "next build",
         "db:push": "dotenv drizzle-kit push:mysql",
         "db:studio": "dotenv drizzle-kit studio",
-        "dev": "tunnel 5996 -- next dev --port PORT",
+        "dev": "next dev --port 5996",
         "lint": "next lint",
         "start": "next start",
         "use": "tsx --env-file ./.env ./src/scripts/index.ts",
