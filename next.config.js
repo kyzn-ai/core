@@ -33,7 +33,7 @@ const config = {
                         }
                     ],
                     destination: "/try/:path*"
-                }
+                },
                 // Additional rule to block access from kyzn.app to any /subdomains path
                 // {
                 //     source: "/try/:path*",
@@ -46,6 +46,17 @@ const config = {
                 //     ],
                 //     destination: "/404"
                 // }
+
+                {
+                    source: "/:path*",
+                    has: [
+                        {
+                            type: "host",
+                            value: "revyse.kyzn.app"
+                        }
+                    ],
+                    destination: "/revyse/:path*"
+                }
             ],
             afterFiles: [],
             fallback: []
